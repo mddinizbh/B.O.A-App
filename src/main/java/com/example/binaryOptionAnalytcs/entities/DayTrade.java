@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -34,10 +35,11 @@ public class DayTrade implements Serializable{
 	private Long valorPorc;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "DtResp",  orphanRemoval = true )
+	@OneToMany(mappedBy = "dayTrade",  orphanRemoval = true )
 	private List <Trade> trades = new ArrayList<>();
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "BANCA_ID" )
 	private Banca bancaResp = new Banca();
 	

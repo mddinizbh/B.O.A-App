@@ -16,7 +16,7 @@ import com.example.binaryOptionAnalytcs.entities.Banca;
 import com.example.binaryOptionAnalytcs.entities.Catalogacao;
 import com.example.binaryOptionAnalytcs.entities.DayTrade;
 import com.example.binaryOptionAnalytcs.entities.Estrategia;
-import com.example.binaryOptionAnalytcs.entities.EstrategiaCatolog;
+import com.example.binaryOptionAnalytcs.entities.EstrategiaCatalog;
 import com.example.binaryOptionAnalytcs.entities.Retirada;
 import com.example.binaryOptionAnalytcs.entities.Trade;
 import com.example.binaryOptionAnalytcs.entities.Usuario;
@@ -24,7 +24,7 @@ import com.example.binaryOptionAnalytcs.repositories.AporteRepository;
 import com.example.binaryOptionAnalytcs.repositories.BancaRepository;
 import com.example.binaryOptionAnalytcs.repositories.CatalogacaoRepository;
 import com.example.binaryOptionAnalytcs.repositories.DayTradeRepository;
-import com.example.binaryOptionAnalytcs.repositories.EstrategiaCatologRepository;
+import com.example.binaryOptionAnalytcs.repositories.EstrategiaCatalogRepository;
 import com.example.binaryOptionAnalytcs.repositories.EstrategiaRepository;
 import com.example.binaryOptionAnalytcs.repositories.RetiradaRepository;
 import com.example.binaryOptionAnalytcs.repositories.TradeRepository;
@@ -50,7 +50,7 @@ public class TestConfig implements CommandLineRunner {
 	private RetiradaRepository retiradaRepository;
 
 	@Autowired
-	private EstrategiaCatologRepository estrategiaCatalogRepository;
+	private EstrategiaCatalogRepository estrategiaCatalogRepository;
 
 	@Autowired
 	private BancaRepository bancaRepository;
@@ -99,9 +99,9 @@ public class TestConfig implements CommandLineRunner {
 		return estrategia;
 		
 	}
-	public EstrategiaCatolog populadorEstrategiaCatalogEstrategia(Catalogacao cat,Estrategia est) {
+	public EstrategiaCatalog populadorEstrategiaCatalogEstrategia(Catalogacao cat,Estrategia est) {
 		
-		EstrategiaCatolog estrategiaCatalog = new EstrategiaCatolog();
+		EstrategiaCatalog estrategiaCatalog = new EstrategiaCatalog();
 		estrategiaCatalog.setId(null);
 		estrategiaCatalog.setCatalogacao(cat);
 		estrategiaCatalog.setEstrategia(est);
@@ -174,7 +174,7 @@ public class TestConfig implements CommandLineRunner {
 		Trade trade= new Trade();
 		
 		trade.setId(null);
-		trade.setDtResp(dayTrade);
+		trade.setDayTrade(dayTrade);
 		trade.setEstrategiaTrade(est);
 		trade.setValorAposta(random*param);
 		trade.setValorPayOut(random*param);
@@ -220,7 +220,7 @@ public class TestConfig implements CommandLineRunner {
 		List <Usuario> usus = new ArrayList<Usuario>();
 		List <Banca> bancas = new ArrayList<Banca>();
 		List <Catalogacao> cats = new ArrayList<Catalogacao>();
-		List <EstrategiaCatolog> estsCats = new ArrayList<EstrategiaCatolog>();
+		List <EstrategiaCatalog> estsCats = new ArrayList<EstrategiaCatalog>();
 		List <DayTrade> dts = new ArrayList<DayTrade>();
 		List <Aporte> aportes = new ArrayList<Aporte>();
 		List <Retirada> retiradas = new ArrayList<Retirada>();

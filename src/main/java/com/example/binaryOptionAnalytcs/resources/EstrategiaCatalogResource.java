@@ -10,31 +10,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.binaryOptionAnalytcs.entities.Usuario;
-import com.example.binaryOptionAnalytcs.services.UsuarioService;
+import com.example.binaryOptionAnalytcs.entities.EstrategiaCatalog;
+import com.example.binaryOptionAnalytcs.services.EstrategiaCatalogService;
 
 @RestController
-@RequestMapping(value = "/usuarios")
-public class UsuarioResource {
+@RequestMapping(value = "/estrategiasCatalogs")
+public class EstrategiaCatalogResource {
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private EstrategiaCatalogService estrategiaCatalogService;
 	
 	@RequestMapping(value="/buscarAll", method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
 				
-	List<Usuario> usuarios = usuarioService.findAll();
+	List<EstrategiaCatalog> estrategiasCatalogs = estrategiaCatalogService.findAll();
 		
-		return ResponseEntity.ok().body(usuarios);
+		return ResponseEntity.ok().body(estrategiasCatalogs);
 	
 	}
 	
 	@RequestMapping(value ="buscarId/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 				
-		Optional<Usuario> usuario = usuarioService.findById(id);
+		Optional<EstrategiaCatalog> estrategiaCatalog = estrategiaCatalogService.findById(id);
 		
-		return ResponseEntity.ok().body(usuario);
+		return ResponseEntity.ok().body(estrategiaCatalog);
 	
 	}
 }

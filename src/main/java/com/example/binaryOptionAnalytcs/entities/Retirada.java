@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Retirada implements Serializable{
 
@@ -26,6 +28,7 @@ public class Retirada implements Serializable{
 	private String descricao;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "BANCA_ID" )
 	private Banca bancaResp = new Banca();
 	

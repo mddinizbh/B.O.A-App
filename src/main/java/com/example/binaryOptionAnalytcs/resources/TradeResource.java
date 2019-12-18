@@ -10,31 +10,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.binaryOptionAnalytcs.entities.Usuario;
-import com.example.binaryOptionAnalytcs.services.UsuarioService;
+import com.example.binaryOptionAnalytcs.entities.Trade;
+import com.example.binaryOptionAnalytcs.services.TradeService;
 
 @RestController
-@RequestMapping(value = "/usuarios")
-public class UsuarioResource {
+@RequestMapping(value = "/trades")
+public class TradeResource {
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private TradeService tradeService;
 	
 	@RequestMapping(value="/buscarAll", method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
 				
-	List<Usuario> usuarios = usuarioService.findAll();
+	List<Trade> trades = tradeService.findAll();
 		
-		return ResponseEntity.ok().body(usuarios);
+		return ResponseEntity.ok().body(trades);
 	
 	}
 	
 	@RequestMapping(value ="buscarId/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 				
-		Optional<Usuario> usuario = usuarioService.findById(id);
+		Optional<Trade> trade = tradeService.findById(id);
 		
-		return ResponseEntity.ok().body(usuario);
+		return ResponseEntity.ok().body(trade);
 	
 	}
 }

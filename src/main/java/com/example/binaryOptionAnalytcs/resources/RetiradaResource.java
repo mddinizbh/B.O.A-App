@@ -10,31 +10,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.binaryOptionAnalytcs.entities.Usuario;
-import com.example.binaryOptionAnalytcs.services.UsuarioService;
+import com.example.binaryOptionAnalytcs.entities.Retirada;
+import com.example.binaryOptionAnalytcs.services.RetiradaService;
 
 @RestController
-@RequestMapping(value = "/usuarios")
-public class UsuarioResource {
+@RequestMapping(value = "/retiradas")
+public class RetiradaResource {
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private RetiradaService retiradaService;
 	
 	@RequestMapping(value="/buscarAll", method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
 				
-	List<Usuario> usuarios = usuarioService.findAll();
+	List<Retirada> retiradas = retiradaService.findAll();
 		
-		return ResponseEntity.ok().body(usuarios);
+		return ResponseEntity.ok().body(retiradas);
 	
 	}
 	
 	@RequestMapping(value ="buscarId/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 				
-		Optional<Usuario> usuario = usuarioService.findById(id);
+		Optional<Retirada> retirada = retiradaService.findById(id);
 		
-		return ResponseEntity.ok().body(usuario);
+		return ResponseEntity.ok().body(retirada);
 	
 	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Trade implements Serializable{
 
@@ -33,8 +35,9 @@ public class Trade implements Serializable{
 	private Estrategia estrategiaTrade;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "DAYTRADE_ID" )		
-	private DayTrade DtResp = new DayTrade();
+	private DayTrade dayTrade = new DayTrade();
 	
 	
 	
@@ -99,13 +102,13 @@ public class Trade implements Serializable{
 		this.tradeStaus = tradeStaus;
 	}
 
-	
-	public DayTrade getDtResp() {
-		return DtResp;
+	@JsonBackReference
+	public DayTrade getDayTrade() {
+		return dayTrade;
 	}
 
-	public void setDtResp(DayTrade dtResp) {
-		DtResp = dtResp;
+	public void setDayTrade(DayTrade dayTrade) {
+		this.dayTrade = dayTrade;
 	}
 	
 	@Override

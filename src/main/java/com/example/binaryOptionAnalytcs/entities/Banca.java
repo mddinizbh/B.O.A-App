@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -59,6 +60,7 @@ public class Banca implements Serializable{
     private List<DayTrade> dayTrades = new ArrayList<>(); 
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "USUARIO_ID" )
 	private Usuario usuarioBanca;
 	

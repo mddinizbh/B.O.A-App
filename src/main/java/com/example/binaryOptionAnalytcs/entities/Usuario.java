@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "USUARIO", uniqueConstraints =
 	@UniqueConstraint(columnNames={"USUARIO_ID", "USUARIO_LOGIN"}) )
@@ -35,10 +37,11 @@ public class Usuario implements Serializable {
 	
 	private String senha;
 	
-	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "usuarioBanca",  orphanRemoval = true )
 	private List<Banca> banca;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "usuarioCatalog",  orphanRemoval = true )
 	private List<Catalogacao> catalogacao = new ArrayList<>() ; 
 	

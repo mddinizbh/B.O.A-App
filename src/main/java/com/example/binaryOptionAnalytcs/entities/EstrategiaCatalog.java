@@ -10,8 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-public class EstrategiaCatolog implements Serializable {
+public class EstrategiaCatalog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,16 +31,17 @@ public class EstrategiaCatolog implements Serializable {
 	private Estrategia estrategia;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "catalogacao_id" )
 	private Catalogacao catalogacao;
 	
 
 
-	public EstrategiaCatolog() {
+	public EstrategiaCatalog() {
 		
 	}
 	
-	public EstrategiaCatolog(Long id, Long qtdOperacaoes, Long qtdWin, Long qtdLose, Long qtdMG, Long qtdMGs) {
+	public EstrategiaCatalog(Long id, Long qtdOperacaoes, Long qtdWin, Long qtdLose, Long qtdMG, Long qtdMGs) {
 		super();
 		this.id = id;
 		this.qtdOperacaoes = qtdOperacaoes;
@@ -127,7 +130,7 @@ public class EstrategiaCatolog implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EstrategiaCatolog other = (EstrategiaCatolog) obj;
+		EstrategiaCatalog other = (EstrategiaCatalog) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

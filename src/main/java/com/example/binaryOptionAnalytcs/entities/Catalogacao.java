@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Catalogacao implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -26,10 +29,12 @@ public class Catalogacao implements Serializable{
 	private Instant horaInicioCatalog;
 	private Instant horafimCatalog;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "catalogacao", cascade = CascadeType.ALL, orphanRemoval = true )
-	private List <EstrategiaCatolog> estrategias = new ArrayList<>() ;
+	private List <EstrategiaCatalog> estrategias = new ArrayList<>() ;
     
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "usuario_id" )
 	private Usuario usuarioCatalog;
 	
@@ -38,7 +43,7 @@ public class Catalogacao implements Serializable{
 	}
 
 	public Catalogacao(Long iD, String nome, Instant data, Instant horaInicioCatalog, Instant horafimCatalog,
-			List<EstrategiaCatolog> estrategias) {
+			List<EstrategiaCatalog> estrategias) {
 		super();
 		id = iD;
 		this.nome = nome;
@@ -109,7 +114,7 @@ public class Catalogacao implements Serializable{
 	}
 
 
-	public List<EstrategiaCatolog> getEstrategias() {
+	public List<EstrategiaCatalog> getEstrategias() {
 		return estrategias;
 	}
 
