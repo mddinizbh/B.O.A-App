@@ -6,7 +6,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,10 +14,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Banca implements Serializable{
 
 	
+	public Usuario getUsuarioBanca() {
+		return usuarioBanca;
+	}
+
+	public void setUsuarioBanca(Usuario usuarioBanca) {
+		this.usuarioBanca = usuarioBanca;
+	}
+
 	/**
 	 * 
 	 */
@@ -36,17 +45,17 @@ public class Banca implements Serializable{
 	
 	private String nome;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "BANCA_ID")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "bancaResp",  orphanRemoval = true )
 	private List <Aporte> aportes = new ArrayList<>() ; 
     
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "BANCA_ID")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "bancaResp",  orphanRemoval = true )
 	private List <Retirada> retiradas = new ArrayList<>() ; 
 	
 	  
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "BANCA_ID")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "bancaResp",  orphanRemoval = true )
     private List<DayTrade> dayTrades = new ArrayList<>(); 
 	
 	@ManyToOne
@@ -59,10 +68,10 @@ public class Banca implements Serializable{
 		
 	}
 
-	public Banca(Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCricao,
-			String nome, List<Aporte> aportes, List<Retirada> retiradas, List<DayTrade> dayTrades) {
+	public Banca (Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCricao,
+			String nome, List<Aporte> aportes, List<Retirada> retiradas, List<DayTrade> dayTrades, Usuario usuarioBanca) {
 		super();
-		this.id = id;
+		this.id = id;	
 		this.valorInicial = valorInicial;
 		this.valorAtual = valorAtual;
 		this.stopGain = stopGain;
@@ -72,6 +81,7 @@ public class Banca implements Serializable{
 		this.aportes = aportes;
 		this.retiradas = retiradas;
 		this.dayTrades = dayTrades;
+		this.usuarioBanca = usuarioBanca;
 	}
 
 	public Long getId() {
@@ -134,24 +144,12 @@ public class Banca implements Serializable{
 		return aportes;
 	}
 
-	public void setAportes(List<Aporte> aportes) {
-		this.aportes = aportes;
-	}
-
 	public List<Retirada> getRetiradas() {
 		return retiradas;
 	}
 
-	public void setRetiradas(List<Retirada> retiradas) {
-		this.retiradas = retiradas;
-	}
-
 	public List<DayTrade> getDayTrades() {
 		return dayTrades;
-	}
-
-	public void setDayTrades(List<DayTrade> dayTrades) {
-		this.dayTrades = dayTrades;
 	}
 
 	@Override

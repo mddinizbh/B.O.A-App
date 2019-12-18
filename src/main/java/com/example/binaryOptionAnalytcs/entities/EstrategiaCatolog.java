@@ -18,8 +18,8 @@ public class EstrategiaCatolog implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long qdtOperacaoes;
-	private Long qdtWin;
+	private Long qtdOperacaoes;
+	private Long qtdWin;
 	private Long qtdLose;
 	private Long qtdMG;
 	private Long qtdMGs;
@@ -32,15 +32,17 @@ public class EstrategiaCatolog implements Serializable {
 	@JoinColumn(name = "catalogacao_id" )
 	private Catalogacao catalogacao;
 	
+
+
 	public EstrategiaCatolog() {
 		
 	}
 	
-	public EstrategiaCatolog(Long id, Long qdtOperacaoes, Long qdtWin, Long qtdLose, Long qtdMG, Long qtdMGs) {
+	public EstrategiaCatolog(Long id, Long qtdOperacaoes, Long qtdWin, Long qtdLose, Long qtdMG, Long qtdMGs) {
 		super();
 		this.id = id;
-		this.qdtOperacaoes = qdtOperacaoes;
-		this.qdtWin = qdtWin;
+		this.qtdOperacaoes = qtdOperacaoes;
+		this.qtdWin = qtdWin;
 		this.qtdLose = qtdLose;
 		this.qtdMG = qtdMG;
 		this.qtdMGs = qtdMGs;
@@ -54,20 +56,20 @@ public class EstrategiaCatolog implements Serializable {
 		this.id = id;
 	}
 
-	public Long getQdtOperacaoes() {
-		return qdtOperacaoes;
+	public Long getQtdOperacaoes() {
+		return qtdOperacaoes;
 	}
 
-	public void setQdtOperacaoes(Long qdtOperacaoes) {
-		this.qdtOperacaoes = qdtOperacaoes;
+	public void setQtdOperacaoes(Long qtdOperacaoes) {
+		this.qtdOperacaoes = qtdOperacaoes;
 	}
 
-	public Long getQdtWin() {
-		return qdtWin;
+	public Long getQtdWin() {
+		return qtdWin;
 	}
 
-	public void setQdtWin(Long qdtWin) {
-		this.qdtWin = qdtWin;
+	public void setQtdWin(Long qtdWin) {
+		this.qtdWin = qtdWin;
 	}
 
 	public Long getQtdLose() {
@@ -92,6 +94,21 @@ public class EstrategiaCatolog implements Serializable {
 
 	public void setQtdMGs(Long qtdMGs) {
 		this.qtdMGs = qtdMGs;
+	}
+	
+	public Estrategia getEstrategia() {
+		return estrategia;
+	}
+
+	public void setEstrategia(Estrategia estrategia) {
+		this.estrategia = estrategia;
+	}
+	public Catalogacao getCatalogacao() {
+		return catalogacao;
+	}
+
+	public void setCatalogacao(Catalogacao catalogacao) {
+		this.catalogacao = catalogacao;
 	}
 
 	@Override
@@ -119,14 +136,7 @@ public class EstrategiaCatolog implements Serializable {
 		return true;
 	}
 
-	public Estrategia getEstrategia() {
-		return estrategia;
-	}
 
-	public void setEstrategia(Estrategia estrategia) {
-		this.estrategia = estrategia;
-	}
-	
 	
 		
 

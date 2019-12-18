@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "USUARIO", uniqueConstraints =
@@ -38,11 +35,11 @@ public class Usuario implements Serializable {
 	
 	private String senha;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "usuarioBanca", cascade = CascadeType.ALL, orphanRemoval = true )
+	
+	@OneToMany(mappedBy = "usuarioBanca",  orphanRemoval = true )
 	private List<Banca> banca;
 	
-	@OneToMany(mappedBy = "usuarioCatalog", cascade = CascadeType.ALL, orphanRemoval = true )
+	@OneToMany(mappedBy = "usuarioCatalog",  orphanRemoval = true )
 	private List<Catalogacao> catalogacao = new ArrayList<>() ; 
 	
 	private Instant dataCriacao;
@@ -55,10 +52,9 @@ public class Usuario implements Serializable {
 	}
 	
 	
-	public Usuario(Long id, String nome, String email, String senha, List<Banca> banca, List<Catalogacao> catalogacao,
+	public Usuario( String nome, String email, String senha, List<Banca> banca, List<Catalogacao> catalogacao,
 			Instant dataCriacao) {
 		super();
-		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;

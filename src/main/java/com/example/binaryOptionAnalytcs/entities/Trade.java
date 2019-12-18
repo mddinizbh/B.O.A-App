@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -30,10 +31,20 @@ public class Trade implements Serializable{
 	@OneToOne()
 	@JoinColumn(name = "ESTRATEGIA_ID")
 	private Estrategia estrategiaTrade;
+	
+	@ManyToOne
+	@JoinColumn(name = "DAYTRADE_ID" )		
+	private DayTrade DtResp = new DayTrade();
+	
+	
+	
+	
+	public Trade() {
+		
+	}
 
-	public Trade(Long id, Long valorAposta, Long valorPayOut, Long valorResultado, Estrategia estrategiaTrade) {
+	public Trade( Long valorAposta, Long valorPayOut, Long valorResultado, Estrategia estrategiaTrade) {
 		super();
-		this.id = id;
 		this.valorAposta = valorAposta;
 		this.valorPayOut = valorPayOut;
 		this.valorResultado = valorResultado;
@@ -88,6 +99,15 @@ public class Trade implements Serializable{
 		this.tradeStaus = tradeStaus;
 	}
 
+	
+	public DayTrade getDtResp() {
+		return DtResp;
+	}
+
+	public void setDtResp(DayTrade dtResp) {
+		DtResp = dtResp;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -112,7 +132,8 @@ public class Trade implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+
 	
 	
 	

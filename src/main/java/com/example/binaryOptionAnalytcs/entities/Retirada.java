@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Retirada implements Serializable{
@@ -23,7 +25,34 @@ public class Retirada implements Serializable{
 	private Instant dataRetirada;
 	private String descricao;
 	
+	@ManyToOne
+	@JoinColumn(name = "BANCA_ID" )
+	private Banca bancaResp = new Banca();
 	
+	public Retirada() {
+		
+	}
+	
+	public Retirada( Long valorRetirada, Instant dataRetirada , String descricao) {
+		super();
+		
+		this.valorRetirada = valorRetirada;
+		this.dataRetirada = dataRetirada;
+		this.descricao = descricao;
+	}
+
+	
+	
+	public Banca getBancaResp() {
+		return bancaResp;
+	}
+
+
+	public void setBancaResp(Banca bancaResp) {
+		this.bancaResp = bancaResp;
+	}
+
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -33,20 +62,7 @@ public class Retirada implements Serializable{
 		this.descricao = descricao;
 	}
 
-
-	public Retirada() {
-		
-	}
-
-
-	public Retirada(Long id, Long valorAporte, Instant dataAporte) {
-		super();
-		this.id = id;
-		this.valorRetirada = valorAporte;
-		this.dataRetirada = dataAporte;
-	}
-
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -57,14 +73,24 @@ public class Retirada implements Serializable{
 	}
 
 
-	public Long getValorAporte() {
+	public Long getValorRetirada() {
 		return valorRetirada;
 	}
 
 
-	public void setValorAporte(Long valorAporte) {
-		this.valorRetirada = valorAporte;
+	public void setValorRetirada(Long valorRetirada) {
+		this.valorRetirada = valorRetirada;
 	}
+	
+	public Instant getDataRetirada() {
+		return dataRetirada;
+	}
+
+
+	public void setDataRetirada(Instant dataAporte) {
+		this.dataRetirada = dataAporte;
+	}
+	
 
 
 	@Override
@@ -94,15 +120,7 @@ public class Retirada implements Serializable{
 	}
 
 
-	public Instant getDataAporte() {
-		return dataRetirada;
-	}
 
-
-	public void setDataAporte(Instant dataAporte) {
-		this.dataRetirada = dataAporte;
-	}
-	
 	
 
 }

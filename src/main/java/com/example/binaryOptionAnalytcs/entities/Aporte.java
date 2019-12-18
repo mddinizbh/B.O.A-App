@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Aporte implements Serializable{
@@ -22,15 +24,30 @@ public class Aporte implements Serializable{
 	private Long valorAporte;
 	private Instant dataAporte;
 	
+	@ManyToOne
+	@JoinColumn(name = "BANCA_ID" )
+	private Banca bancaResp = new Banca();
+	
+	
 	
 	public Aporte() {
 		
 	}
 
 
-	public Aporte(Long id, Long valorAporte, Instant dataAporte) {
+	public Banca getBancaResp() {
+		return bancaResp;
+	}
+
+
+	public void setBancaResp(Banca bancaResp) {
+		this.bancaResp = bancaResp;
+	}
+
+
+	public Aporte( Long valorAporte, Instant dataAporte) {
 		super();
-		this.id = id;
+		
 		this.valorAporte = valorAporte;
 		this.dataAporte = dataAporte;
 	}

@@ -36,8 +36,7 @@ public class Catalogacao implements Serializable{
 	public Catalogacao() {
 		
 	}
-	
-	
+
 	public Catalogacao(Long iD, String nome, Instant data, Instant horaInicioCatalog, Instant horafimCatalog,
 			List<EstrategiaCatolog> estrategias) {
 		super();
@@ -49,14 +48,24 @@ public class Catalogacao implements Serializable{
 		this.estrategias = estrategias;
 	}
 
-
-	public Long getID() {
+	
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setID(Long iD) {
-		id = iD;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Usuario getUsuarioCatalog() {
+		return usuarioCatalog;
+	}
+
+
+	public void setUsuarioCatalog(Usuario usuarioCatalog) {
+		this.usuarioCatalog = usuarioCatalog;
 	}
 
 
@@ -105,9 +114,7 @@ public class Catalogacao implements Serializable{
 	}
 
 
-	public void setEstrategias(List<EstrategiaCatolog> estrategias) {
-		this.estrategias = estrategias;
-	}
+
 
 
 	@Override

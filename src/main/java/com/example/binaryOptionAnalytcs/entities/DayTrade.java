@@ -6,13 +6,15 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -31,17 +33,37 @@ public class DayTrade implements Serializable{
 	private Long valorReal;
 	private Long valorPorc;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "DAYTRADE_ID")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "DtResp",  orphanRemoval = true )
 	private List <Trade> trades = new ArrayList<>();
+	
+	@ManyToOne
+	@JoinColumn(name = "BANCA_ID" )
+	private Banca bancaResp = new Banca();
+	
+	
 
-	public DayTrade(Long id, Instant data, Long valorReal, Long valorPorc, List<Trade> trades) {
+
+	public DayTrade() {
+		
+	}
+
+	public DayTrade( Instant data, Long valorReal, Long valorPorc, List<Trade> trades) {
 		super();
-		this.id = id;
+		
 		this.data = data;
 		this.valorReal = valorReal;
 		this.valorPorc = valorPorc;
 		this.trades = trades;
+	}
+	
+	
+	public Banca getBancaResp() {
+		return bancaResp;
+	}
+
+	public void setBancaResp(Banca bancaResp) {
+		this.bancaResp = bancaResp;
 	}
 
 	public Long getId() {
@@ -80,10 +102,7 @@ public class DayTrade implements Serializable{
 		return trades;
 	}
 
-	public void setTrades(List<Trade> trades) {
-		this.trades = trades;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

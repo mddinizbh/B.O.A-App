@@ -19,17 +19,17 @@ public class Estrategia implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private String descriçao;
+	private String descricao;
 	
 	public Estrategia() {
 		
 	}
 	
-	public Estrategia(Long id, String nome, String descriçao) {
+	public Estrategia( String nome, String descriçao) {
 		super();
-		this.id = id;
+		
 		this.nome = nome;
-		this.descriçao = descriçao;
+		this.descricao = descriçao;
 	}
 
 	public Long getId() {
@@ -48,19 +48,19 @@ public class Estrategia implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getDescriçao() {
-		return descriçao;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setDescriçao(String descriçao) {
-		this.descriçao = descriçao;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((descriçao == null) ? 0 : descriçao.hashCode());
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		return result;
 	}
 
@@ -73,10 +73,10 @@ public class Estrategia implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Estrategia other = (Estrategia) obj;
-		if (descriçao == null) {
-			if (other.descriçao != null)
+		if (descricao == null) {
+			if (other.descricao != null)
 				return false;
-		} else if (!descriçao.equals(other.descriçao))
+		} else if (!descricao.equals(other.descricao))
 			return false;
 		return true;
 	}
