@@ -41,6 +41,17 @@ public class Catalogacao implements Serializable{
 	public Catalogacao() {
 		
 	}
+	
+	public Catalogacao(Long iD, String nome, Instant data, Instant horaInicioCatalog, Instant horafimCatalog
+			) {
+		super();
+		id = iD;
+		this.nome = nome;
+		this.data = data;
+		this.horaInicioCatalog = horaInicioCatalog;
+		this.horafimCatalog = horafimCatalog;
+		
+	}
 
 	public Catalogacao(Long iD, String nome, Instant data, Instant horaInicioCatalog, Instant horafimCatalog,
 			List<EstrategiaCatalog> estrategias) {

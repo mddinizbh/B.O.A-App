@@ -53,11 +53,21 @@ public class Usuario implements Serializable {
 	public Usuario() {
 		
 	}
+		
+	public Usuario(Long id, String login, String nome, String email, String senha,Instant dataCriacao) {
+		this.id = id;
+		this.login = login;
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.dataCriacao = dataCriacao;
 	
+	}
 	
-	public Usuario( String nome, String email, String senha, List<Banca> banca, List<Catalogacao> catalogacao,
+	public Usuario(Long id, String login, String nome, String email, String senha, List<Banca> banca, List<Catalogacao> catalogacao,
 			Instant dataCriacao) {
-		super();
+		this.id = id;
+		this.login = login;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
@@ -87,6 +97,35 @@ public class Usuario implements Serializable {
 	public String getSenha() {
 		return senha;
 	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public List<Banca> getBanca() {
+		return banca;
+	}
+
+	public List<Catalogacao> getCatalogacao() {
+		return catalogacao;
+	}
+	
+	public Instant getDataCriacao() {
+		return dataCriacao;
+	}
+	public void setDataCriacao(Instant dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+
+	public String getLogin() {
+		return login;
+	}
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,34 +165,6 @@ public class Usuario implements Serializable {
 	}
 
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	public List<Banca> getBanca() {
-		return banca;
-	}
-
-	public List<Catalogacao> getCatalogacao() {
-		return catalogacao;
-	}
-	
-	public Instant getDataCriacao() {
-		return dataCriacao;
-	}
-	public void setDataCriacao(Instant dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-
-	public String getLogin() {
-		return login;
-	}
-
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	
 	
  
 }

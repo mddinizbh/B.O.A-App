@@ -177,13 +177,13 @@ public class TestConfig implements CommandLineRunner {
 		trade.setDayTrade(dayTrade);
 		trade.setEstrategiaTrade(est);
 		trade.setValorAposta(random*param);
-		trade.setValorPayOut(random*param);
+		trade.setValorPayOut(random);
 		if(Math.random()*10 >= 5) {
-			trade.setTradeStaus('W');
+			trade.setTradeStatus('W');
 		}else {
-			trade.setTradeStaus('L');
+			trade.setTradeStatus('L');
 		}
-		if (trade.getTradeStaus() == 'W') {
+		if (trade.getTradeStatus() == 'W') {
 			trade.setValorResultado(trade.getValorAposta()*trade.getValorPayOut());
 		}else {
 			trade.setValorResultado(trade.getValorAposta()*-1);
@@ -201,17 +201,7 @@ public class TestConfig implements CommandLineRunner {
 	public void setRandom(Long param) {
 		this.random = (long) (Math.random()*param*10) ;
 	}
- 
-	
-	
-		
-	
-	
-	
-	
-	
-	
-	
+ 	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub

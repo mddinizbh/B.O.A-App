@@ -28,7 +28,7 @@ public class Trade implements Serializable{
 	private Long valorPayOut;
 	private Long valorResultado;
 	
-	private char tradeStaus;
+	private char tradeStatus;
 	
 	@OneToOne()
 	@JoinColumn(name = "ESTRATEGIA_ID")
@@ -45,6 +45,16 @@ public class Trade implements Serializable{
 	public Trade() {
 		
 	}
+	
+	public Trade( Long valorAposta, Long valorPayOut, Long valorResultado, char tradeStatus) {
+		super();
+		this.valorAposta = valorAposta;
+		this.valorPayOut = valorPayOut;
+		this.valorResultado = valorResultado;
+		this.tradeStatus = tradeStatus;
+		
+	}
+
 
 	public Trade( Long valorAposta, Long valorPayOut, Long valorResultado, Estrategia estrategiaTrade) {
 		super();
@@ -94,12 +104,12 @@ public class Trade implements Serializable{
 		this.estrategiaTrade = estrategiaTrade;
 	}
 
-	public char getTradeStaus() {
-		return tradeStaus;
+	public char getTradeStatus() {
+		return tradeStatus;
 	}
 
-	public void setTradeStaus(char tradeStaus) {
-		this.tradeStaus = tradeStaus;
+	public void setTradeStatus(char tradeStatus) {
+		this.tradeStatus = tradeStatus;
 	}
 
 	@JsonBackReference

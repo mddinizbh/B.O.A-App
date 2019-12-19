@@ -49,6 +49,14 @@ public class DayTrade implements Serializable{
 	public DayTrade() {
 		
 	}
+	public DayTrade( Instant data, Long valorReal, Long valorPorc) {
+		super();
+		
+		this.data = data;
+		this.valorReal = valorReal;
+		this.valorPorc = valorPorc;
+		
+	}
 
 	public DayTrade( Instant data, Long valorReal, Long valorPorc, List<Trade> trades) {
 		super();

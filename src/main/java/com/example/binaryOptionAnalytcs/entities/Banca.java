@@ -42,7 +42,7 @@ public class Banca implements Serializable{
 	private Long stopGain;
 	private Long stopLoss;
 	
-	private Instant dataCricao;
+	private Instant dataCriacao;
 	
 	private String nome;
 	
@@ -70,7 +70,20 @@ public class Banca implements Serializable{
 		
 	}
 
-	public Banca (Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCricao,
+	public Banca (Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
+			String nome) {
+		super();
+		this.id = id;	
+		this.valorInicial = valorInicial;
+		this.valorAtual = valorAtual;
+		this.stopGain = stopGain;
+		this.stopLoss = stopLoss;
+		this.dataCriacao = dataCriacao;
+		this.nome = nome;
+
+	}
+		
+	public Banca (Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
 			String nome, List<Aporte> aportes, List<Retirada> retiradas, List<DayTrade> dayTrades, Usuario usuarioBanca) {
 		super();
 		this.id = id;	
@@ -78,7 +91,7 @@ public class Banca implements Serializable{
 		this.valorAtual = valorAtual;
 		this.stopGain = stopGain;
 		this.stopLoss = stopLoss;
-		this.dataCricao = dataCricao;
+		this.dataCriacao = dataCriacao;
 		this.nome = nome;
 		this.aportes = aportes;
 		this.retiradas = retiradas;
@@ -126,12 +139,12 @@ public class Banca implements Serializable{
 		this.stopLoss = stopLoss;
 	}
 
-	public Instant getDataCricao() {
-		return dataCricao;
+	public Instant getDataCriacao() {
+		return dataCriacao;
 	}
 
-	public void setDataCricao(Instant dataCricao) {
-		this.dataCricao = dataCricao;
+	public void setDataCricao(Instant dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
 	public String getNome() {

@@ -1,7 +1,6 @@
 package com.example.binaryOptionAnalytcs.resources;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class BancaResource {
 	@Autowired
 	private BancaService bancaService;
 	
-	@RequestMapping(value="/buscarAll", method = RequestMethod.GET)
+	@RequestMapping(value="/findAll", method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
 				
 	List<Banca> bancas = bancaService.findAll();
@@ -29,10 +28,10 @@ public class BancaResource {
 	
 	}
 	
-	@RequestMapping(value ="buscarId/{id}", method = RequestMethod.GET)
+	@RequestMapping(value ="findById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 				
-		Optional<Banca> banca = bancaService.findById(id);
+		Banca banca = bancaService.findById(id);
 		
 		return ResponseEntity.ok().body(banca);
 	

@@ -31,6 +31,13 @@ public class Estrategia implements Serializable {
 		this.nome = nome;
 		this.descricao = descriçao;
 	}
+	
+	public Estrategia( Long id, String nome, String descriçao) {
+		super();
+		
+		this.nome = nome;
+		this.descricao = descriçao;
+	}
 
 	public Long getId() {
 		return id;
