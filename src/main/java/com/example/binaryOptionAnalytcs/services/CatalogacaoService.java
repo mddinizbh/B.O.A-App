@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.binaryOptionAnalytcs.dto.CatalogacaoDTO;
 import com.example.binaryOptionAnalytcs.entities.Catalogacao;
+import com.example.binaryOptionAnalytcs.enuns.MensagensEnum;
 import com.example.binaryOptionAnalytcs.repositories.CatalogacaoRepository;
+import com.example.binaryOptionAnalytcs.repositories.MessageByLocaleRepository;
 import com.example.binaryOptionAnalytcs.services.exceptions.DataIntegrityException;
 import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundException;
 
@@ -23,7 +25,10 @@ import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundExcept
 public class CatalogacaoService {
 	
 	@Autowired
-	CatalogacaoRepository repository;
+	private CatalogacaoRepository repository;
+	
+	@Autowired
+	private MessageByLocaleRepository messageSource;
 	
 	
 	public List<Catalogacao> findAll(){
@@ -35,8 +40,13 @@ public class CatalogacaoService {
 	public Catalogacao findById(Long id) {
 		Optional<Catalogacao> catalogacao =repository.findById(id);
 		
-		return catalogacao.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Catalogacao.class.getName()));
+		Object [] args = new Object[10];
+		args[0]=id;
+		args[1]= Catalogacao.class.getName();
+		
+		String msg = messageSource.getMessage(MensagensEnum.TIPO_NAO_ENCONTRADO.getMenssagem(),args);
+		
+		return catalogacao.orElseThrow(() -> new ObjectNotFoundException(msg));
 	}
 	
 	public Page<Catalogacao> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
@@ -62,7 +72,7 @@ public class CatalogacaoService {
 		try {
 			repository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel Deletar uma Estrategia que está relacionada a um Trade ou a uma Catalogação de Estrategia");
+			throw new DataIntegrityException(messageSource.getMessage(MensagensEnum.ERRO_DELETAR_CATALOGACAO.getMenssagem()));
 		}
 	}
 	

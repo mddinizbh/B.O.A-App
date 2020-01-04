@@ -3,6 +3,7 @@ package com.example.binaryOptionAnalytcs.config;
 
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.example.binaryOptionAnalytcs.entities.Catalogacao;
 import com.example.binaryOptionAnalytcs.entities.DayTrade;
 import com.example.binaryOptionAnalytcs.entities.Estrategia;
 import com.example.binaryOptionAnalytcs.entities.EstrategiaCatalog;
+import com.example.binaryOptionAnalytcs.entities.ParMoeda;
 import com.example.binaryOptionAnalytcs.entities.Retirada;
 import com.example.binaryOptionAnalytcs.entities.Trade;
 import com.example.binaryOptionAnalytcs.entities.Usuario;
@@ -26,6 +28,7 @@ import com.example.binaryOptionAnalytcs.repositories.CatalogacaoRepository;
 import com.example.binaryOptionAnalytcs.repositories.DayTradeRepository;
 import com.example.binaryOptionAnalytcs.repositories.EstrategiaCatalogRepository;
 import com.example.binaryOptionAnalytcs.repositories.EstrategiaRepository;
+import com.example.binaryOptionAnalytcs.repositories.ParMoedaRepository;
 import com.example.binaryOptionAnalytcs.repositories.RetiradaRepository;
 import com.example.binaryOptionAnalytcs.repositories.TradeRepository;
 import com.example.binaryOptionAnalytcs.repositories.UsuarioRepository;
@@ -63,6 +66,9 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private CatalogacaoRepository catalogacaoRepository;
+	
+	@Autowired
+	private ParMoedaRepository ParMoedaRepository;
 
 	@Autowired
 	public Usuario populadorUsuario() {
@@ -83,11 +89,18 @@ public class TestConfig implements CommandLineRunner {
 		banca.setUsuarioBanca(usu);
 		banca.setDataCricao(Instant.now());
 		banca.setValorInicial(random*1000);
-		banca.setValorAtual(random*1000);
+		banca.setValorAtual(banca.getValorInicial());
 		banca.setNome("banca "+random);
 		banca.setStopGain(random);
 		banca.setStopLoss(random);
 		return banca;
+	}
+	public ParMoeda populadorParMoeda() {
+		ParMoeda par = new ParMoeda();
+		par.setId(null);
+		par.setNome(random+"/"+random+1);
+		
+		return par;
 	}
 	
 	public Estrategia populadorEstrategia() {
@@ -105,11 +118,11 @@ public class TestConfig implements CommandLineRunner {
 		estrategiaCatalog.setId(null);
 		estrategiaCatalog.setCatalogacao(cat);
 		estrategiaCatalog.setEstrategia(est);
-		estrategiaCatalog.setQtdMGs(random);
-		estrategiaCatalog.setQtdLose(random);
-		estrategiaCatalog.setQtdWin(random);
-		estrategiaCatalog.setQtdMG(random);
 		estrategiaCatalog.setQtdOperacaoes(random);
+		estrategiaCatalog.setQtdMGs(estrategiaCatalog.getQtdOperacaoes()/4);
+		estrategiaCatalog.setQtdLose(estrategiaCatalog.getQtdOperacaoes()/4);
+		estrategiaCatalog.setQtdWin(estrategiaCatalog.getQtdOperacaoes()/4);
+		estrategiaCatalog.setQtdMG(estrategiaCatalog.getQtdOperacaoes()/4);
 				
 		return estrategiaCatalog;
 		
@@ -121,7 +134,7 @@ public class TestConfig implements CommandLineRunner {
 		
 		aporte.setId(null);
 		aporte.setBancaResp(banca);
-		aporte.setDataAporte(Instant.now());
+		aporte.setDataAporte(LocalDate.now());
 		aporte.setValorAporte(random);
 			
 		return aporte;
@@ -139,20 +152,22 @@ public class TestConfig implements CommandLineRunner {
 		return retirada;
 	}
 	
-	public Catalogacao populadorCatalogacao (Usuario usuario) {
+	public Catalogacao populadorCatalogacao (Usuario usuario, ParMoeda par) {
 		
 		Catalogacao catalogacao = new Catalogacao();
 		
 		catalogacao.setId(null);
 		catalogacao.setUsuarioCatalog(usuario);
+		catalogacao.setParMoeda(par);
 		catalogacao.setNome("Catalogacao "+ random);
-		catalogacao.setData(Instant.now());
-		catalogacao.setHoraInicioCatalog(Instant.now());
-		catalogacao.setHorafimCatalog(Instant.now());
+		catalogacao.setData(LocalDate.now());
+		catalogacao.setHoraInicioCatalog(LocalDate.now());
+		catalogacao.setHorafimCatalog(LocalDate.now());
 		
 		return catalogacao;
 		
 	}
+	
 	
 	public DayTrade populadorDayTrade (Banca banca){
 		
@@ -199,7 +214,7 @@ public class TestConfig implements CommandLineRunner {
 	}
 
 	public void setRandom(Long param) {
-		this.random = (long) (Math.random()*param*10) ;
+		this.random = (long) (Math.random()*param*100) ;
 	}
  	
 	@Override
@@ -215,6 +230,7 @@ public class TestConfig implements CommandLineRunner {
 		List <Aporte> aportes = new ArrayList<Aporte>();
 		List <Retirada> retiradas = new ArrayList<Retirada>();
 		List <Estrategia> ests = new ArrayList<Estrategia>();
+		List <ParMoeda> pars = new ArrayList<ParMoeda>();
 		List <Trade> trades = new ArrayList<Trade>(); 
 		
 		for (int i = 0; i<10;i++) {
@@ -231,8 +247,8 @@ public class TestConfig implements CommandLineRunner {
 				trades.add(populadorTrade(dts.get(i), ests.get(i),y));
 			}
 					
-			
-			cats.add(populadorCatalogacao(usus.get(i)));
+			pars.add(populadorParMoeda());
+			cats.add(populadorCatalogacao(usus.get(i),pars.get(i)));
 			estsCats.add(populadorEstrategiaCatalogEstrategia(cats.get(i),ests.get(i)));
 					
 		}
@@ -246,9 +262,11 @@ public class TestConfig implements CommandLineRunner {
 		
 		dayTradeRepository.saveAll(dts);
 		tradeRepository.saveAll(trades);
-		
+		ParMoedaRepository.saveAll(pars);
 		catalogacaoRepository.saveAll(cats);
 		estrategiaCatalogRepository.saveAll(estsCats);
+		
+		
 		
 	}
 }

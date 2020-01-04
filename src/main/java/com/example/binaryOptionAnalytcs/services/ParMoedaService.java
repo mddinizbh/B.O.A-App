@@ -3,7 +3,6 @@ package com.example.binaryOptionAnalytcs.services;
 
 
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,56 +13,58 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.example.binaryOptionAnalytcs.dto.BancaDTO;
-import com.example.binaryOptionAnalytcs.dto.BancaNewDTO;
-import com.example.binaryOptionAnalytcs.entities.Banca;
+import com.example.binaryOptionAnalytcs.dto.ParMoedaDTO;
+import com.example.binaryOptionAnalytcs.entities.ParMoeda;
 import com.example.binaryOptionAnalytcs.enuns.MensagensEnum;
-import com.example.binaryOptionAnalytcs.repositories.BancaRepository;
 import com.example.binaryOptionAnalytcs.repositories.MessageByLocaleRepository;
+import com.example.binaryOptionAnalytcs.repositories.ParMoedaRepository;
 import com.example.binaryOptionAnalytcs.services.exceptions.DataIntegrityException;
 import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class BancaService {
+public class ParMoedaService {
 	
 	@Autowired
-	private BancaRepository repository;
+	private ParMoedaRepository repository;
+	
 	@Autowired
 	private MessageByLocaleRepository messageSource;
 	
 	
-	public List<Banca> findAll(){
-		List <Banca> bancas = repository.findAll();
+	public List<ParMoeda> findAll(){
+		List <ParMoeda> ParMoedas = repository.findAll();
 		
-		return bancas;
+		return ParMoedas;
 	}
 	
-	public Banca findById(Long id) {
-		Optional<Banca> banca = repository.findById(id);
-		
+	public ParMoeda findById(Long id) {
+		Optional<ParMoeda> ParMoeda = repository.findById(id);
+
+	
 		Object [] args = new Object[10];
 		args[0]=id;
-		args[1]= Banca.class.getName();
+		args[1]= ParMoeda.class.getName();
 		
 		String msg = messageSource.getMessage(MensagensEnum.TIPO_NAO_ENCONTRADO.getMenssagem(),args);
 		
-		return banca.orElseThrow(() -> new ObjectNotFoundException(msg));
+		return ParMoeda.orElseThrow(() -> new ObjectNotFoundException(msg));
 		
 	}
 	
-	public Page<Banca> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<ParMoeda> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
 				orderBy);
 		
 		return repository.findAll(pageRequest);
 	}
-	public Banca insert(Banca obj) {
+
+	public ParMoeda insert(ParMoeda obj) {
 		obj.setId(null);
 		return repository.save(obj);
 	}
 
-	public Banca update(Banca obj) {
+	public ParMoeda update(ParMoeda obj) {
 	
 		findById(obj.getId());
 		return repository.save(obj);
@@ -74,22 +75,15 @@ public class BancaService {
 		try {
 			repository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException(messageSource.getMessage(MensagensEnum.ERRO_DELETAR_BANCA.getMenssagem()));
+			throw new DataIntegrityException(messageSource.getMessage(MensagensEnum.ERRO_DELETAR_PARMOEDA.getMenssagem()));
 		}
 	}
 	
-	public Banca fromDTO(BancaDTO dto) {
 	
-		return new Banca(dto.getId(), dto.getValorInicial(), dto.getValorAtual(), dto.getStopGain(), 
-							dto.getStopLoss(), dto.getDataCriacao(),dto.getNome());
+	public ParMoeda fromDTO(ParMoedaDTO dto) {
+		
+		return new ParMoeda(dto.getId(),dto.getNome());
 		
 	}
-	public Banca fromNewDTO( BancaNewDTO dto) {
-		
-		Banca banca = new Banca(null,dto.getValorInicial(), dto.getValorAtual(), dto.getStopGain(), dto.getStopLoss(), Instant.now(), dto.getNome());
-		banca.getUsuarioBanca().setId(dto.getIdUsario());
-		return banca;
-	}
-	
 
 }

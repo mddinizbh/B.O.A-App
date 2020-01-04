@@ -1,36 +1,30 @@
 package com.example.binaryOptionAnalytcs.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 
-import com.example.binaryOptionAnalytcs.entities.Aporte;
+import com.example.binaryOptionAnalytcs.services.validation.AporteInsert;
 
-public class AporteDTO implements Serializable {
+@AporteInsert
+public class AporteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	private Long valorAporte;
-	private LocalDate dataAporte;
+	private Instant dataAporte;
 	
 	
-	public AporteDTO() {
+	public AporteNewDTO() {
 		
 	}
 
 
-	public AporteDTO(Long id, Long valorAporte, LocalDate dataAporte) {
+	public AporteNewDTO(Long id, Long valorAporte, Instant dataAporte) {
 		super();
 		this.id = id;
 		this.valorAporte = valorAporte;
 		this.dataAporte = dataAporte;
-	}
-
-
-	public AporteDTO(Aporte obj) {
-		this.id = obj.getId();
-		this.valorAporte = obj.getValorAporte();
-		this.dataAporte = obj.getDataAporte();
 	}
 
 
@@ -54,12 +48,12 @@ public class AporteDTO implements Serializable {
 	}
 
 
-	public LocalDate getDataAporte() {
+	public Instant getDataAporte() {
 		return dataAporte;
 	}
 
 
-	public void setDataAporte(LocalDate dataAporte) {
+	public void setDataAporte(Instant dataAporte) {
 		this.dataAporte = dataAporte;
 	}
 	

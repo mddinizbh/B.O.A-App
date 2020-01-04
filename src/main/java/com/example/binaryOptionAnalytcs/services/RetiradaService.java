@@ -14,7 +14,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.binaryOptionAnalytcs.dto.RetiradaDTO;
+import com.example.binaryOptionAnalytcs.entities.EstrategiaCatalog;
 import com.example.binaryOptionAnalytcs.entities.Retirada;
+import com.example.binaryOptionAnalytcs.enuns.MensagensEnum;
+import com.example.binaryOptionAnalytcs.repositories.MessageByLocaleRepository;
 import com.example.binaryOptionAnalytcs.repositories.RetiradaRepository;
 import com.example.binaryOptionAnalytcs.services.exceptions.DataIntegrityException;
 import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundException;
@@ -23,7 +26,9 @@ import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundExcept
 public class RetiradaService {
 	
 	@Autowired
-	RetiradaRepository repository;
+	private RetiradaRepository repository;
+	@Autowired
+	private MessageByLocaleRepository messageSource;
 	
 	
 	public List<Retirada> findAll(){
@@ -35,8 +40,13 @@ public class RetiradaService {
 	public Retirada findById(Long id) {
 		Optional<Retirada> retirada = repository.findById(id);
 		
-		return retirada.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Retirada.class.getName()));
+		Object [] args = new Object[10];
+		args[0]=id;
+		args[1]= EstrategiaCatalog.class.getName();
+		
+		String msg = messageSource.getMessage(MensagensEnum.TIPO_NAO_ENCONTRADO.getMenssagem(),args);
+		
+		return retirada.orElseThrow(() -> new ObjectNotFoundException(msg));
 		
 	}
 	
@@ -63,7 +73,7 @@ public class RetiradaService {
 		try {
 			repository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel Deletar uma Estrategia que está relacionada a um Trade ou a uma Catalogação de Estrategia");
+			throw new DataIntegrityException(messageSource.getMessage(MensagensEnum.ERRO_DELETAR_RETIRADA.getMenssagem()));
 		}
 	}
 	

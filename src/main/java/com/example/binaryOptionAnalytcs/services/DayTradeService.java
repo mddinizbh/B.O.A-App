@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.binaryOptionAnalytcs.dto.DayTradeDTO;
 import com.example.binaryOptionAnalytcs.entities.DayTrade;
+import com.example.binaryOptionAnalytcs.enuns.MensagensEnum;
 import com.example.binaryOptionAnalytcs.repositories.DayTradeRepository;
+import com.example.binaryOptionAnalytcs.repositories.MessageByLocaleRepository;
 import com.example.binaryOptionAnalytcs.services.exceptions.DataIntegrityException;
 import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundException;
 
@@ -23,7 +25,10 @@ import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundExcept
 public class DayTradeService {
 	
 	@Autowired
-	DayTradeRepository repository;
+	private DayTradeRepository repository;
+	
+	@Autowired
+	private MessageByLocaleRepository messageSource;
 	
 	
 	public List<DayTrade> findAll(){
@@ -35,8 +40,13 @@ public class DayTradeService {
 	public DayTrade findById(Long id) {
 		Optional<DayTrade> DayTrade = repository.findById(id);
 		
-		return DayTrade.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + DayTrade.class.getName()));
+		Object [] args = new Object[10];
+		args[0]=id;
+		args[1]= DayTrade.class.getName();
+		
+		String msg = messageSource.getMessage(MensagensEnum.TIPO_NAO_ENCONTRADO.getMenssagem(),args);
+		
+		return DayTrade.orElseThrow(() -> new ObjectNotFoundException(msg));
 		
 	}
 	
@@ -63,7 +73,7 @@ public class DayTradeService {
 		try {
 			repository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel Deletar uma Estrategia que está relacionada a um Trade ou a uma Catalogação de Estrategia");
+			throw new DataIntegrityException(messageSource.getMessage(MensagensEnum.ERRO_DELETAR_DAYTRADE.getMenssagem()));
 		}
 	}
 	

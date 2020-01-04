@@ -14,7 +14,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.binaryOptionAnalytcs.dto.TradeDTO;
+import com.example.binaryOptionAnalytcs.entities.EstrategiaCatalog;
 import com.example.binaryOptionAnalytcs.entities.Trade;
+import com.example.binaryOptionAnalytcs.enuns.MensagensEnum;
+import com.example.binaryOptionAnalytcs.repositories.MessageByLocaleRepository;
 import com.example.binaryOptionAnalytcs.repositories.TradeRepository;
 import com.example.binaryOptionAnalytcs.services.exceptions.DataIntegrityException;
 import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundException;
@@ -24,6 +27,8 @@ public class TradeService {
 	
 	@Autowired
 	TradeRepository repository;
+	@Autowired
+	private MessageByLocaleRepository messageSource;
 	
 	
 	public List<Trade> findAll(){
@@ -35,8 +40,13 @@ public class TradeService {
 	public Trade findById(Long id) {
 		Optional<Trade> trade = repository.findById(id);
 		
-		return trade.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Trade.class.getName()));
+		Object [] args = new Object[10];
+		args[0]=id;
+		args[1]= EstrategiaCatalog.class.getName();
+		
+		String msg = messageSource.getMessage(MensagensEnum.TIPO_NAO_ENCONTRADO.getMenssagem(),args);
+		
+		return trade.orElseThrow(() -> new ObjectNotFoundException(msg));
 		
 	}
 	
@@ -63,7 +73,7 @@ public class TradeService {
 		try {
 			repository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel Deletar uma Estrategia que está relacionada a um Trade ou a uma Catalogação de Estrategia");
+			throw new DataIntegrityException(messageSource.getMessage(MensagensEnum.ERRO_DELETAR_TRADE.getMenssagem()));
 		}
 	}
 	

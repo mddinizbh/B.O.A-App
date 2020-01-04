@@ -4,8 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,61 +15,62 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.binaryOptionAnalytcs.dto.BancaDTO;
-import com.example.binaryOptionAnalytcs.dto.BancaNewDTO;
-import com.example.binaryOptionAnalytcs.entities.Banca;
-import com.example.binaryOptionAnalytcs.services.BancaService;
+import com.example.binaryOptionAnalytcs.dto.ParMoedaDTO;
+import com.example.binaryOptionAnalytcs.entities.ParMoeda;
+import com.example.binaryOptionAnalytcs.services.ParMoedaService;
 
 @RestController
-@RequestMapping(value = "/bancas")
-public class BancaResource {
+@RequestMapping(value = "/pares")
+public class ParMoedaResource {
 	
 	@Autowired
-	private BancaService service;
+	ParMoedaService service;
 	
-	@RequestMapping(value="/findAll", method = RequestMethod.GET)
-	public ResponseEntity<List <BancaDTO>> findAll() {
+	@RequestMapping(value="", method = RequestMethod.GET)
+	public ResponseEntity<?> findAll() {
 				
-	List<Banca> bancas = service.findAll();
-	List<BancaDTO> bancasDto = bancas.stream().map(obj -> new BancaDTO(obj)).collect(Collectors.toList());	
-		return ResponseEntity.ok().body(bancasDto);
+	List<ParMoeda> list = service.findAll();
+	List<ParMoedaDTO>  listDto = list.stream().map(obj -> new ParMoedaDTO(obj)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDto);
 	
 	}
 	
-	
-	@RequestMapping(value ="findById/{id}", method = RequestMethod.GET)
-	public ResponseEntity<BancaDTO> findById(@PathVariable Long id) {
+	@RequestMapping(value ="/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> findById(@PathVariable Long id) {
 				
-		BancaDTO banca =  new BancaDTO(service.findById(id));
+		ParMoedaDTO dto = new ParMoedaDTO(service.findById(id));
 		
-		return ResponseEntity.ok().body(banca);
+		return ResponseEntity.ok().body(dto);
 	
 	}
 	@RequestMapping(value="/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<BancaDTO>> findPage(@RequestParam(value="page", defaultValue ="0") Integer page,
+	public ResponseEntity<Page<ParMoedaDTO>> findPage(@RequestParam(value="page", defaultValue ="0") Integer page,
 														@RequestParam(value="linesPerPage", defaultValue ="24") Integer linesPerPage,
 														@RequestParam(value="orderBy", defaultValue ="nome") String orderBy, 
 														@RequestParam(value="direction", defaultValue ="ASC") String direction) {
 		
-		Page<Banca> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<BancaDTO>  listDto = list.map(obj -> new BancaDTO(obj));
+		Page<ParMoeda> list = service.findPage(page, linesPerPage, orderBy, direction);
+		Page<ParMoedaDTO>  listDto = list.map(obj -> new ParMoedaDTO(obj));
 			
-	    return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(listDto);
 		
 	}
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody BancaNewDTO objDto){
+	public ResponseEntity<Void> insert (@RequestBody ParMoedaDTO objDto){
 		
-		Banca obj = service.fromNewDTO(objDto);
+		ParMoeda obj = service.fromDTO(objDto);
 		service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
-		}
+		
+	}
 	@RequestMapping( value="/{id}",method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody BancaDTO objDto, @PathVariable Long id){
-		Banca obj = service.fromDTO(objDto);
+	public ResponseEntity<Void> update(@RequestBody ParMoedaDTO objDto, @PathVariable Long id){
+		ParMoeda obj = service.fromDTO(objDto);
 		
 		obj.setId(id);
 		obj = service.update(obj);
@@ -86,5 +85,6 @@ public class BancaResource {
 		return ResponseEntity.noContent().build();
 			
 	}
+	
 	
 }

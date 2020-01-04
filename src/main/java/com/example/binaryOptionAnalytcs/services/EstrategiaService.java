@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.binaryOptionAnalytcs.dto.EstrategiaDTO;
 import com.example.binaryOptionAnalytcs.entities.Estrategia;
+import com.example.binaryOptionAnalytcs.enuns.MensagensEnum;
 import com.example.binaryOptionAnalytcs.repositories.EstrategiaRepository;
+import com.example.binaryOptionAnalytcs.repositories.MessageByLocaleRepository;
 import com.example.binaryOptionAnalytcs.services.exceptions.DataIntegrityException;
 import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundException;
 
@@ -23,7 +25,10 @@ import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundExcept
 public class EstrategiaService {
 	
 	@Autowired
-	EstrategiaRepository repository;
+	private EstrategiaRepository repository;
+	
+	@Autowired
+	private MessageByLocaleRepository messageSource;
 	
 	
 	public List<Estrategia> findAll(){
@@ -36,8 +41,13 @@ public class EstrategiaService {
 		Optional<Estrategia> estrategia = repository.findById(id);
 
 	
-		return estrategia.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Estrategia.class.getName()));
+		Object [] args = new Object[10];
+		args[0]=id;
+		args[1]= Estrategia.class.getName();
+		
+		String msg = messageSource.getMessage(MensagensEnum.TIPO_NAO_ENCONTRADO.getMenssagem(),args);
+		
+		return estrategia.orElseThrow(() -> new ObjectNotFoundException(msg));
 		
 	}
 	
@@ -65,7 +75,7 @@ public class EstrategiaService {
 		try {
 			repository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel Deletar uma Estrategia que está relacionada a um Trade ou a uma Catalogação de Estrategia");
+			throw new DataIntegrityException(messageSource.getMessage(MensagensEnum.ERRO_DELETAR_ESTRATEGIA.getMenssagem()));
 		}
 	}
 	

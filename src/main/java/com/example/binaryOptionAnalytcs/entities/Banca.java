@@ -62,7 +62,7 @@ public class Banca implements Serializable{
 	@ManyToOne
 	@JsonBackReference
 	@JoinColumn(name = "USUARIO_ID" )
-	private Usuario usuarioBanca;
+	private Usuario usuarioBanca = new Usuario();
 	
 	
 

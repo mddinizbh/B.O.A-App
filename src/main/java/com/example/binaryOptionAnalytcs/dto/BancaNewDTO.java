@@ -3,59 +3,52 @@ package com.example.binaryOptionAnalytcs.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.example.binaryOptionAnalytcs.entities.Banca;
+import org.hibernate.validator.constraints.Length;
 
-public class BancaDTO implements Serializable{
+import com.example.binaryOptionAnalytcs.services.validation.BancaInsert;
+@BancaInsert
+public class BancaNewDTO implements Serializable{
 
-		private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
-	private Long id;
-	private Long valorInicial;
-	private Long valorAtual;
-	private Long stopGain;
-	private Long stopLoss;
-	private Instant dataCriacao;
-	private String nome;
 	private Long idUsuario;
+		
+	private Long valorInicial;
 	
+	private Long valorAtual;
 	
-	public BancaDTO() {
+	private Long stopGain;
+			
+	private Long stopLoss;
+	
+	private Instant dataCriacao;
+	
+	@Length(min = 5, max=80, message ="O tamanho deve estar entre 5 e 80" )	
+	private String nome;
+	
+	public BancaNewDTO() {
 		
 	}
-	public BancaDTO(Banca obj) {
-		this.id = obj.getId();
-		this.valorInicial = obj.getValorInicial();
-		this.valorAtual = obj.getValorAtual();
-		this.stopGain = obj.getStopGain();
-		this.stopLoss = obj.getStopLoss();
-		this.nome = obj.getNome();
-		this.dataCriacao = obj.getDataCriacao();
-		this.idUsuario = obj.getUsuarioBanca().getId();
-		
-		
-	}
 	
-	
-	
-	public BancaDTO (Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
+	public BancaNewDTO (Long idUsuario, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
 			String nome) {
 		super();
-		this.id = id;	
+		
+		this.idUsuario = idUsuario;	
 		this.valorInicial = valorInicial;
-		this.valorAtual = valorAtual;
+		this.valorAtual = valorInicial;
 		this.stopGain = stopGain;
 		this.stopLoss = stopLoss;
 		this.dataCriacao = dataCriacao;
 		this.nome = nome;
-
 	}
 
-	public Long getId() {
-		return id;
+	public Long getIdUsario() {
+		return idUsuario;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdUsuario(Long id) {
+		this.idUsuario = id;
 	}
 
 	public Long getValorInicial() {
@@ -104,12 +97,6 @@ public class BancaDTO implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
 	}
 	
 	

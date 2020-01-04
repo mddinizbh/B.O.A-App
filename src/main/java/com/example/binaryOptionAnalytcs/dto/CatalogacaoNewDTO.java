@@ -5,36 +5,30 @@ import java.time.LocalDate;
 
 import com.example.binaryOptionAnalytcs.entities.Catalogacao;
 
-public class CatalogacaoDTO implements Serializable {
+public class CatalogacaoNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	
 	private String nome;
 	private LocalDate data;
 	private LocalDate horaInicioCatalog;
 	private LocalDate horafimCatalog;
 	
-	public CatalogacaoDTO () {
+	public CatalogacaoNewDTO () {
 		
 	}
 
-	public CatalogacaoDTO(Catalogacao obj) {
+	public CatalogacaoNewDTO(Catalogacao obj) {
 		super();
-		this.id = obj.getId();
+		
 		this.nome = obj.getNome();
 		this.data = obj.getData();
 		this.horaInicioCatalog = obj.getHoraInicioCatalog();
 		this.horafimCatalog = obj.getHorafimCatalog();
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 
 	public String getNome() {
 		return nome;

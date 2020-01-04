@@ -30,6 +30,8 @@ public class Usuario implements Serializable {
 	
 	private String nome;
 	
+	
+	
 	private String email;
 	
 	@Column(name = "USUARIO_LOGIN")
@@ -38,11 +40,11 @@ public class Usuario implements Serializable {
 	private String senha;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "usuarioBanca",  orphanRemoval = true )
+	@OneToMany(mappedBy = "usuarioBanca", orphanRemoval = true )
 	private List<Banca> banca;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "usuarioCatalog",  orphanRemoval = true )
+	@OneToMany(mappedBy = "usuarioCatalog", orphanRemoval = true )
 	private List<Catalogacao> catalogacao = new ArrayList<>() ; 
 	
 	private Instant dataCriacao;
@@ -53,13 +55,22 @@ public class Usuario implements Serializable {
 	public Usuario() {
 		
 	}
-		
-	public Usuario(Long id, String login, String nome, String email, String senha,Instant dataCriacao) {
+	
+
+	
+	public Usuario( Long id, String login,String nome,String email,String senha) {
 		this.id = id;
 		this.login = login;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
+		this.dataCriacao = Instant.now();
+	}
+		
+	public Usuario(Long id, String nome, String email, Instant dataCriacao) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
 		this.dataCriacao = dataCriacao;
 	
 	}

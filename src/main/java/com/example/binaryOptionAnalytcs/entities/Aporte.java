@@ -1,7 +1,7 @@
 package com.example.binaryOptionAnalytcs.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +24,7 @@ public class Aporte implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long valorAporte;
-	private Instant dataAporte;
+	private LocalDate dataAporte;
 	
 	@ManyToOne
 	@JsonBackReference
@@ -37,7 +37,7 @@ public class Aporte implements Serializable{
 		
 	}
 	
-	public Aporte( Long id, Long valorAporte, Instant dataAporte) {
+	public Aporte( Long id, Long valorAporte, LocalDate dataAporte) {
 		super();
 		this.id = id;
 		this.valorAporte = valorAporte;
@@ -75,12 +75,12 @@ public class Aporte implements Serializable{
 		this.valorAporte = valorAporte;
 	}
 
-	public Instant getDataAporte() {
+	public LocalDate getDataAporte() {
 		return dataAporte;
 	}
 	
 	
-	public void setDataAporte(Instant dataAporte) {
+	public void setDataAporte(LocalDate dataAporte) {
 		this.dataAporte = dataAporte;
 	}
 	

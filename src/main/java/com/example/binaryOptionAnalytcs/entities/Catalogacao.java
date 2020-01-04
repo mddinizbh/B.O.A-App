@@ -1,7 +1,7 @@
 package com.example.binaryOptionAnalytcs.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -25,14 +26,20 @@ public class Catalogacao implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private Instant data;
-	private Instant horaInicioCatalog;
-	private Instant horafimCatalog;
+	private LocalDate data;
+	private LocalDate horaInicioCatalog;
+	private LocalDate horafimCatalog;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "catalogacao", cascade = CascadeType.ALL, orphanRemoval = true )
-	private List <EstrategiaCatalog> estrategias = new ArrayList<>() ;
+	private List <EstrategiaCatalog> estrategiasCatalogadas = new ArrayList<>();
+	
+	@OneToOne
+	@JoinColumn(name = "PARMOEDA_ID")
+	private ParMoeda parMoeda;
     
+
+
 	@ManyToOne
 	@JsonBackReference
 	@JoinColumn(name = "usuario_id" )
@@ -42,7 +49,7 @@ public class Catalogacao implements Serializable{
 		
 	}
 	
-	public Catalogacao(Long iD, String nome, Instant data, Instant horaInicioCatalog, Instant horafimCatalog
+	public Catalogacao(Long iD, String nome, LocalDate data, LocalDate horaInicioCatalog, LocalDate horafimCatalog
 			) {
 		super();
 		id = iD;
@@ -53,7 +60,7 @@ public class Catalogacao implements Serializable{
 		
 	}
 
-	public Catalogacao(Long iD, String nome, Instant data, Instant horaInicioCatalog, Instant horafimCatalog,
+	public Catalogacao(Long iD, String nome, LocalDate data, LocalDate horaInicioCatalog, LocalDate horafimCatalog,
 			List<EstrategiaCatalog> estrategias) {
 		super();
 		id = iD;
@@ -61,7 +68,7 @@ public class Catalogacao implements Serializable{
 		this.data = data;
 		this.horaInicioCatalog = horaInicioCatalog;
 		this.horafimCatalog = horafimCatalog;
-		this.estrategias = estrategias;
+		this.estrategiasCatalogadas = estrategias;
 	}
 
 	
@@ -95,41 +102,48 @@ public class Catalogacao implements Serializable{
 	}
 
 
-	public Instant getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
 
-	public void setData(Instant data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
 
-	public Instant getHoraInicioCatalog() {
+	public LocalDate getHoraInicioCatalog() {
 		return horaInicioCatalog;
 	}
 
 
-	public void setHoraInicioCatalog(Instant horaInicioCatalog) {
+	public void setHoraInicioCatalog(LocalDate horaInicioCatalog) {
 		this.horaInicioCatalog = horaInicioCatalog;
 	}
 
 
-	public Instant getHorafimCatalog() {
+	public LocalDate getHorafimCatalog() {
 		return horafimCatalog;
 	}
 
 
-	public void setHorafimCatalog(Instant horafimCatalog) {
+	public void setHorafimCatalog(LocalDate horafimCatalog) {
 		this.horafimCatalog = horafimCatalog;
 	}
 
 
-	public List<EstrategiaCatalog> getEstrategias() {
-		return estrategias;
+	public List<EstrategiaCatalog> getEstrategiasCatalogadas() {
+		return estrategiasCatalogadas;
 	}
 
 
+	public ParMoeda getParMoeda() {
+		return parMoeda;
+	}
+	
+	public void setParMoeda(ParMoeda parMoeda) {
+		this.parMoeda = parMoeda;
+	}
 
 
 
