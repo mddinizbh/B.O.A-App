@@ -13,7 +13,7 @@ import com.example.binaryOptionAnalytcs.services.exceptions.DataIntegrityExcepti
 import com.example.binaryOptionAnalytcs.services.exceptions.ObjectNotFoundException;
 /**
  * 
- * Classe criada para manipular execeções
+ * Classe criada para manipular exceções
  * 
  * @author Marley
  *
