@@ -10,7 +10,7 @@ public class AporteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private Long idBanca;
 	private Long valorAporte;
 	private Instant dataAporte;
 	
@@ -20,21 +20,21 @@ public class AporteNewDTO implements Serializable {
 	}
 
 
-	public AporteNewDTO(Long id, Long valorAporte, Instant dataAporte) {
+	public AporteNewDTO(Long idBanca, Long valorAporte, Instant dataAporte) {
 		super();
-		this.id = id;
+		this.idBanca = idBanca;
 		this.valorAporte = valorAporte;
 		this.dataAporte = dataAporte;
 	}
 
 
-	public Long getId() {
-		return id;
+	public Long getBancaId() {
+		return idBanca;
 	}
 
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setBancaId(Long id) {
+		this.idBanca = id;
 	}
 
 

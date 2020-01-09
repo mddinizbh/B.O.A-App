@@ -5,6 +5,7 @@ public enum MensagensEnum {
 		PREENCHIMENTO_OBRIGATORIO ("preenchimento.obrigatorio"),
 		VALOR_MAIOR_ZERO("valor.maior.zero"),
 		EMAIL_INVALIDO("email.invalid"),
+		SENHA_INVALIDA("senha.invalid"),
 		EMAIL_CADASTRADO("email.cadastrado"),
 		LOGIN_CADASTRADO("login.cadastrado"),
 		TAMANHO_5A20("tamanho.5a20"),
@@ -21,7 +22,10 @@ public enum MensagensEnum {
 		ERRO_DELETAR_PARMOEDA("erro.deletar.parmoeda"),
 		
 		
-		TIPO_NAO_ENCONTRADO("tipo.naoencontrado");
+		
+		
+		TIPO_NAO_ENCONTRADO("tipo.naoencontrado"),
+		USUARIO_NAO_AUTORIZADO("usuario.nao.autorizado");
 		
 		
 		
@@ -30,6 +34,7 @@ public enum MensagensEnum {
 		
 		private MensagensEnum(String descricao) {
 			this.descricao = descricao;
+			getMenssagem();
 		}
 
 		public String getMenssagem() {

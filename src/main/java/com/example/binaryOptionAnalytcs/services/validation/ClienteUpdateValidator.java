@@ -9,19 +9,19 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
-import com.example.binaryOptionAnalytcs.dto.UsuarioDTO;
-import com.example.binaryOptionAnalytcs.entities.Usuario;
-import com.example.binaryOptionAnalytcs.repositories.UsuarioRepository;
+import com.example.binaryOptionAnalytcs.dto.ClienteDTO;
+import com.example.binaryOptionAnalytcs.entities.Cliente;
+import com.example.binaryOptionAnalytcs.repositories.ClienteRepository;
 import com.example.binaryOptionAnalytcs.resources.exceptions.FieldMessage;
 
-public class UsuarioUpdateValidator extends GenericValidator implements ConstraintValidator<UsuarioInsert, UsuarioDTO>  {
+public class ClienteUpdateValidator extends GenericValidator implements ConstraintValidator<ClienteInsert, ClienteDTO>  {
 
 		@Autowired	
-		private UsuarioRepository repo;
+		private ClienteRepository repo;
 		@Autowired
 		private HttpServletRequest request;
 		
-		public void validarCampos(UsuarioDTO value) {
+		public void validarCampos(ClienteDTO value) {
 			
 		@SuppressWarnings("unchecked")
 		Map <String,String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
@@ -35,7 +35,7 @@ public class UsuarioUpdateValidator extends GenericValidator implements Constrai
 		}else if(!value.getEmail().contains("@")) {
 			list.add(new FieldMessage("email",messageLocale.getMessage("email.invalido") ));
 		} else {
-			Usuario aux = repo.findByEmail(value.getEmail());
+			Cliente aux = repo.findByEmail(value.getEmail());
 			if (aux!=null && !aux.getId().equals(id)) {
 				list.add(new FieldMessage("email",messageLocale.getMessage("email.cadastrado") ));
 			}
@@ -46,11 +46,11 @@ public class UsuarioUpdateValidator extends GenericValidator implements Constrai
 	}
 	
 	@Override
-	public void initialize(UsuarioInsert ann) {
+	public void initialize(ClienteInsert ann) {
 		
 	}
 	@Override
-	public boolean isValid(UsuarioDTO value, ConstraintValidatorContext context) {
+	public boolean isValid(ClienteDTO value, ConstraintValidatorContext context) {
 		
 			validarCampos(value);
 			populaContext(context);	

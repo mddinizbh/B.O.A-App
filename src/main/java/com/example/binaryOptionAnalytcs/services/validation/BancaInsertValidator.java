@@ -11,8 +11,8 @@ public class BancaInsertValidator extends GenericValidator implements Constraint
 
 	
 	public void validarCampos(BancaNewDTO value) {
-		if(value.getIdUsario() == null) {
-			list.add(new FieldMessage("idUsuario",messageLocale.getMessage("preenchimento.obrigatorio") ));
+		if(value.getIdCliente() == null) {
+			list.add(new FieldMessage("idCliente",messageLocale.getMessage("preenchimento.obrigatorio") ));
 		}
 		
 		if(value.getValorInicial() == null) {

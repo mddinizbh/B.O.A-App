@@ -12,6 +12,10 @@ public class AporteInsertValidator extends GenericValidator implements Constrain
 	
 	public void validarCampos(AporteNewDTO value) {
 		
+		if(value.getBancaId()==null) {
+			list.add(new FieldMessage("valorAporte",messageLocale.getMessage("preenchimento.obrigatorio") ));
+		}
+		
 		if(value.getValorAporte() == null) {
 			list.add(new FieldMessage("valorAporte",messageLocale.getMessage("preenchimento.obrigatorio") ));
 		}else if (value.getValorAporte() <= 0) {

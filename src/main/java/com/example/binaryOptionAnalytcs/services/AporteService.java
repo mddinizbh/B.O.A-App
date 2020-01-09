@@ -3,7 +3,6 @@ package com.example.binaryOptionAnalytcs.services;
 
 
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,13 +77,13 @@ public Page<Aporte> findPage(Integer page, Integer linesPerPage, String orderBy,
 	
 	public Aporte fromDTO(AporteDTO dto) {
 		
-		return new Aporte(dto.getId(),dto.getValorAporte(), dto.getDataAporte());
+		return new Aporte(dto.getId(),dto.getValorAporte());
 		
 	}
 
 	public Aporte fromNewDTO(AporteNewDTO dto) {
 		// TODO Auto-generated method stub
-		return new Aporte(null,dto.getValorAporte(), LocalDate.now());
+		return new Aporte(null,dto.getValorAporte());
 	}
 
 }

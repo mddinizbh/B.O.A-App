@@ -2,6 +2,7 @@ package com.example.binaryOptionAnalytcs.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.example.binaryOptionAnalytcs.entities.Catalogacao;
 
@@ -12,8 +13,8 @@ public class CatalogacaoDTO implements Serializable {
 	private Long id;
 	private String nome;
 	private LocalDate data;
-	private LocalDate horaInicioCatalog;
-	private LocalDate horafimCatalog;
+	private LocalTime horaInicio;
+	private LocalTime horaFImg;
 	
 	public CatalogacaoDTO () {
 		
@@ -24,8 +25,8 @@ public class CatalogacaoDTO implements Serializable {
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.data = obj.getData();
-		this.horaInicioCatalog = obj.getHoraInicioCatalog();
-		this.horafimCatalog = obj.getHorafimCatalog();
+		this.horaInicio = obj.getHoraFim();
+		this.horaFImg = obj.getHoraInicio();
 	}
 
 	public Long getId() {
@@ -52,20 +53,20 @@ public class CatalogacaoDTO implements Serializable {
 		this.data = data;
 	}
 
-	public LocalDate getHoraInicioCatalog() {
-		return horaInicioCatalog;
+	public LocalTime getHoraInicio() {
+		return horaInicio;
 	}
 
-	public void setHoraInicioCatalog(LocalDate horaInicioCatalog) {
-		this.horaInicioCatalog = horaInicioCatalog;
+	public void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio = horaInicio;
 	}
 
-	public LocalDate getHorafimCatalog() {
-		return horafimCatalog;
+	public LocalTime getHoraFim() {
+		return horaFImg;
 	}
 
-	public void setHorafimCatalog(LocalDate horafimCatalog) {
-		this.horafimCatalog = horafimCatalog;
+	public void setHoraFim(LocalTime horaFImg) {
+		this.horaFImg = horaFImg;
 	}
 	
 

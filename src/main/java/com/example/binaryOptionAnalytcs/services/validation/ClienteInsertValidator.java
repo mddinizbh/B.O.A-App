@@ -5,17 +5,17 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.binaryOptionAnalytcs.dto.UsuarioNewDTO;
-import com.example.binaryOptionAnalytcs.entities.Usuario;
-import com.example.binaryOptionAnalytcs.repositories.UsuarioRepository;
+import com.example.binaryOptionAnalytcs.dto.ClienteNewDTO;
+import com.example.binaryOptionAnalytcs.entities.Cliente;
+import com.example.binaryOptionAnalytcs.repositories.ClienteRepository;
 import com.example.binaryOptionAnalytcs.resources.exceptions.FieldMessage;
 
-public class UsuarioInsertValidator extends GenericValidator implements ConstraintValidator<UsuarioInsert, UsuarioNewDTO>  {
+public class ClienteInsertValidator extends GenericValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO>  {
 
 		@Autowired	
-		private UsuarioRepository repo;
+		private ClienteRepository repo;
 		
-		public void validarCampos(UsuarioNewDTO value) {
+		public void validarCampos(ClienteNewDTO value) {
 		if (value.getNome() == null) {
 			list.add(new FieldMessage("nome",messageLocale.getMessage("preenchimento.obrigatorio") ));
 		} else if(value.getNome().length()<5 ||value.getNome().length()>80 ){
@@ -29,7 +29,7 @@ public class UsuarioInsertValidator extends GenericValidator implements Constrai
 		}else if(!value.getEmail().contains("@")) {
 			list.add(new FieldMessage("email",messageLocale.getMessage("email.invalido") ));
 		} else {
-			Usuario aux = repo.findByEmail(value.getEmail());
+			Cliente aux = repo.findByEmail(value.getEmail());
 			if (aux!=null) {
 				list.add(new FieldMessage("email",messageLocale.getMessage("email.cadastrado") ));
 			}
@@ -44,7 +44,7 @@ public class UsuarioInsertValidator extends GenericValidator implements Constrai
 		}else if(value.getLogin().length()<5 ||value.getNome().length()>20 ){
 			list.add(new FieldMessage("login",messageLocale.getMessage("tamanho.5a20") ));
 		}else {
-			Usuario aux = repo.findByLogin(value.getLogin());
+			Cliente aux = repo.findByLogin(value.getLogin());
 			if (aux!=null) {
 				list.add(new FieldMessage("login",messageLocale.getMessage("login.cadastrado") ));
 			}
@@ -66,11 +66,11 @@ public class UsuarioInsertValidator extends GenericValidator implements Constrai
 	}
 	
 	@Override
-	public void initialize(UsuarioInsert ann) {
+	public void initialize(ClienteInsert ann) {
 		
 	}
 	@Override
-	public boolean isValid(UsuarioNewDTO value, ConstraintValidatorContext context) {
+	public boolean isValid(ClienteNewDTO value, ConstraintValidatorContext context) {
 		
 			validarCampos(value);
 			populaContext(context);	

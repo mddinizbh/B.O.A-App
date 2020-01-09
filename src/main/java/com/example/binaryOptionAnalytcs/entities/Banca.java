@@ -21,12 +21,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Banca implements Serializable{
 
 	
-	public Usuario getUsuarioBanca() {
-		return usuarioBanca;
+	public Cliente getClienteBanca() {
+		return clienteBanca;
 	}
 
-	public void setUsuarioBanca(Usuario usuarioBanca) {
-		this.usuarioBanca = usuarioBanca;
+	public void setClienteBanca(Cliente clienteBanca) {
+		this.clienteBanca = clienteBanca;
 	}
 
 	/**
@@ -61,8 +61,8 @@ public class Banca implements Serializable{
 	
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name = "USUARIO_ID" )
-	private Usuario usuarioBanca = new Usuario();
+	@JoinColumn(name = "CLIENTE_ID" )
+	private Cliente clienteBanca = new Cliente();
 	
 	
 
@@ -84,7 +84,7 @@ public class Banca implements Serializable{
 	}
 		
 	public Banca (Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
-			String nome, List<Aporte> aportes, List<Retirada> retiradas, List<DayTrade> dayTrades, Usuario usuarioBanca) {
+			String nome, List<Aporte> aportes, List<Retirada> retiradas, List<DayTrade> dayTrades, Cliente clienteBanca) {
 		super();
 		this.id = id;	
 		this.valorInicial = valorInicial;
@@ -96,7 +96,7 @@ public class Banca implements Serializable{
 		this.aportes = aportes;
 		this.retiradas = retiradas;
 		this.dayTrades = dayTrades;
-		this.usuarioBanca = usuarioBanca;
+		this.clienteBanca = clienteBanca;
 	}
 
 	public Long getId() {

@@ -37,23 +37,13 @@ public class Aporte implements Serializable{
 		
 	}
 	
-	public Aporte( Long id, Long valorAporte, LocalDate dataAporte) {
+	public Aporte( Long id, Long valorAporte) {
 		super();
 		this.id = id;
 		this.valorAporte = valorAporte;
-		this.dataAporte = dataAporte;
-	}
-
-
-	public Banca getBancaResp() {
-		return bancaResp;
-	}
-
-
-	public void setBancaResp(Banca bancaResp) {
-		this.bancaResp = bancaResp;
-	}
-
+		this.dataAporte = LocalDate.now();
+		
+		}
 
 
 	public Long getId() {
@@ -84,6 +74,14 @@ public class Aporte implements Serializable{
 		this.dataAporte = dataAporte;
 	}
 	
+	public Banca getBancaResp() {
+		return bancaResp;
+	}
+	
+	
+	public void setBancaResp(Banca bancaResp) {
+		this.bancaResp = bancaResp;
+	}
 
 	@Override
 	public int hashCode() {

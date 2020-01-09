@@ -2,6 +2,7 @@ package com.example.binaryOptionAnalytcs.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.lang.NonNull;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -27,13 +30,14 @@ public class Catalogacao implements Serializable{
 	private Long id;
 	private String nome;
 	private LocalDate data;
-	private LocalDate horaInicioCatalog;
-	private LocalDate horafimCatalog;
+	private LocalTime horaInicio;
+	private LocalTime horaFim;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "catalogacao", cascade = CascadeType.ALL, orphanRemoval = true )
 	private List <EstrategiaCatalog> estrategiasCatalogadas = new ArrayList<>();
 	
+	@NonNull
 	@OneToOne
 	@JoinColumn(name = "PARMOEDA_ID")
 	private ParMoeda parMoeda;
@@ -42,35 +46,45 @@ public class Catalogacao implements Serializable{
 
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name = "usuario_id" )
-	private Usuario usuarioCatalog;
+	@JoinColumn(name = "cliente_id" )
+	private Cliente clienteCatalog;
 	
 	public Catalogacao() {
 		
 	}
-	
-	public Catalogacao(Long iD, String nome, LocalDate data, LocalDate horaInicioCatalog, LocalDate horafimCatalog
+	public Catalogacao(Long iD, String nome, LocalDate data, String horaInicio, String horaFim
 			) {
 		super();
 		id = iD;
 		this.nome = nome;
-		this.data = data;
-		this.horaInicioCatalog = horaInicioCatalog;
-		this.horafimCatalog = horafimCatalog;
+		this.data = LocalDate.now();
+		this.horaInicio = dataFromString(horaInicio);
+		this.horaFim = dataFromString(horaFim);
 		
 	}
+	
 
-	public Catalogacao(Long iD, String nome, LocalDate data, LocalDate horaInicioCatalog, LocalDate horafimCatalog,
+	public Catalogacao(Long iD, String nome, LocalDate data, String horaInicio, String horaFim,
 			List<EstrategiaCatalog> estrategias) {
 		super();
 		id = iD;
 		this.nome = nome;
 		this.data = data;
-		this.horaInicioCatalog = horaInicioCatalog;
-		this.horafimCatalog = horafimCatalog;
+		this.horaInicio = dataFromString(horaInicio);
+		this.horaFim = dataFromString(horaFim);
 		this.estrategiasCatalogadas = estrategias;
 	}
 
+	public Catalogacao(Long iD, String nome, LocalDate data, LocalTime horaInicio, LocalTime horaFim
+			) {
+		super();
+		id = iD;
+		this.nome = nome;
+		this.data = data;
+		this.horaInicio = horaInicio;
+		this.horaFim = horaFim;
+		
+	}
 	
 	public Long getId() {
 		return id;
@@ -82,13 +96,13 @@ public class Catalogacao implements Serializable{
 	}
 
 
-	public Usuario getUsuarioCatalog() {
-		return usuarioCatalog;
+	public Cliente getClienteCatalog() {
+		return clienteCatalog;
 	}
 
 
-	public void setUsuarioCatalog(Usuario usuarioCatalog) {
-		this.usuarioCatalog = usuarioCatalog;
+	public void setClienteCatalog(Cliente clienteCatalog) {
+		this.clienteCatalog = clienteCatalog;
 	}
 
 
@@ -112,23 +126,23 @@ public class Catalogacao implements Serializable{
 	}
 
 
-	public LocalDate getHoraInicioCatalog() {
-		return horaInicioCatalog;
+	public LocalTime getHoraInicio() {
+		return horaInicio;
 	}
 
 
-	public void setHoraInicioCatalog(LocalDate horaInicioCatalog) {
-		this.horaInicioCatalog = horaInicioCatalog;
+	public void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio = horaInicio;
 	}
 
 
-	public LocalDate getHorafimCatalog() {
-		return horafimCatalog;
+	public LocalTime getHoraFim() {
+		return horaFim;
 	}
 
 
-	public void setHorafimCatalog(LocalDate horafimCatalog) {
-		this.horafimCatalog = horafimCatalog;
+	public void setHoraFim(LocalTime horaFim) {
+		this.horaFim = horaFim;
 	}
 
 
@@ -154,7 +168,7 @@ public class Catalogacao implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+		
 
 	@Override
 	public boolean equals(Object obj) {
@@ -171,6 +185,17 @@ public class Catalogacao implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	private LocalTime dataFromString(String s) {
+	
+		if(s.contains(":")) {
+			Integer hora = Integer.parseInt(s.split(":")[0]);
+			Integer minuto = Integer.parseInt(s.split(":")[1]);
+			return LocalTime.of(hora, minuto);
+		}
+		
+		return null;
 	}
 
 

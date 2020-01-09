@@ -1,34 +1,33 @@
 package com.example.binaryOptionAnalytcs.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
-import com.example.binaryOptionAnalytcs.entities.Catalogacao;
+import com.example.binaryOptionAnalytcs.services.validation.CatalogacaoInsert;
 
+@CatalogacaoInsert
 public class CatalogacaoNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	
+	private Long idCliente;
+	private Long idParMoeda;
 	private String nome;
-	private LocalDate data;
-	private LocalDate horaInicioCatalog;
-	private LocalDate horafimCatalog;
+	private String horaInicio;
+	private String horaFim;
+
 	
 	public CatalogacaoNewDTO () {
 		
 	}
-
-	public CatalogacaoNewDTO(Catalogacao obj) {
-		super();
-		
-		this.nome = obj.getNome();
-		this.data = obj.getData();
-		this.horaInicioCatalog = obj.getHoraInicioCatalog();
-		this.horafimCatalog = obj.getHorafimCatalog();
-	}
-
 	
+	public Long getIdCliente() {
+		return idCliente;
+	}
+	
+	
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
+	}
 
 	public String getNome() {
 		return nome;
@@ -38,29 +37,31 @@ public class CatalogacaoNewDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public LocalDate getData() {
-		return data;
+	public String getHoraInicio() {
+		return horaInicio;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setHoraInicio(String horaInicio) {
+		this.horaInicio = horaInicio;
 	}
 
-	public LocalDate getHoraInicioCatalog() {
-		return horaInicioCatalog;
+	public String getHoraFim() {
+		return horaFim;
 	}
 
-	public void setHoraInicioCatalog(LocalDate horaInicioCatalog) {
-		this.horaInicioCatalog = horaInicioCatalog;
+	public void setHoraFim(String horafim) {
+		this.horaFim = horafim;
 	}
 
-	public LocalDate getHorafimCatalog() {
-		return horafimCatalog;
+	public Long getIdParMoeda() {
+		return idParMoeda;
 	}
 
-	public void setHorafimCatalog(LocalDate horafimCatalog) {
-		this.horafimCatalog = horafimCatalog;
+	public void setIdParMoeda(Long idParMoeda) {
+		this.idParMoeda = idParMoeda;
 	}
+
+
 	
 
 }

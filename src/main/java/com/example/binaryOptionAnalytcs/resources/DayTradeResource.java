@@ -19,7 +19,7 @@ import com.example.binaryOptionAnalytcs.entities.DayTrade;
 import com.example.binaryOptionAnalytcs.services.DayTradeService;
 
 @RestController
-@RequestMapping(value = "/dayTrades")
+@RequestMapping(value = "/daytrades")
 public class DayTradeResource {
 	
 	@Autowired

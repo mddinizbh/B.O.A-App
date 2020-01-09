@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.binaryOptionAnalytcs.dto.CatalogacaoDTO;
+import com.example.binaryOptionAnalytcs.dto.CatalogacaoNewDTO;
 import com.example.binaryOptionAnalytcs.entities.Catalogacao;
 import com.example.binaryOptionAnalytcs.enuns.MensagensEnum;
 import com.example.binaryOptionAnalytcs.repositories.CatalogacaoRepository;
@@ -78,7 +79,12 @@ public class CatalogacaoService {
 	
 	public Catalogacao fromDTO(CatalogacaoDTO dto) {
 		
-		return new Catalogacao(dto.getId(), dto.getNome(), dto.getData(), dto.getHoraInicioCatalog(), dto.getHorafimCatalog());
+		return new Catalogacao(dto.getId(), dto.getNome(), dto.getData(), dto.getHoraInicio(), dto.getHoraFim());
+	}
+	
+	public Catalogacao fromNewDTO(CatalogacaoNewDTO dto) {
+		return new Catalogacao( null, dto.getNome(),null, dto.getHoraInicio(), dto.getHoraFim());
+		
 	}
 
 }

@@ -11,7 +11,7 @@ public class BancaNewDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Long idUsuario;
+	private Long idCliente;
 		
 	private Long valorInicial;
 	
@@ -30,11 +30,11 @@ public class BancaNewDTO implements Serializable{
 		
 	}
 	
-	public BancaNewDTO (Long idUsuario, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
+	public BancaNewDTO (Long idCliente, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
 			String nome) {
 		super();
 		
-		this.idUsuario = idUsuario;	
+		this.idCliente = idCliente;	
 		this.valorInicial = valorInicial;
 		this.valorAtual = valorInicial;
 		this.stopGain = stopGain;
@@ -43,12 +43,12 @@ public class BancaNewDTO implements Serializable{
 		this.nome = nome;
 	}
 
-	public Long getIdUsario() {
-		return idUsuario;
+	public Long getIdCliente() {
+		return idCliente;
 	}
 
-	public void setIdUsuario(Long id) {
-		this.idUsuario = id;
+	public void setidCliente(Long id) {
+		this.idCliente = id;
 	}
 
 	public Long getValorInicial() {

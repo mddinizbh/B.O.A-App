@@ -3,10 +3,16 @@ package com.example.binaryOptionAnalytcs.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,68 +20,88 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "USUARIO", uniqueConstraints =
-	@UniqueConstraint(columnNames={"USUARIO_ID", "USUARIO_LOGIN"}) )
+@Table(name = "CLIENTE", uniqueConstraints =
+	@UniqueConstraint(columnNames={"CLIENTE", "CLIENTE_LOGIN"}) )
 
-public class Usuario implements Serializable {
+public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "USUARIO_ID")
+	@Column(name = "CLIENTE")
 	private Long id;
 	
 	private String nome;
-	
-	
-	
+		
+	@JsonIgnore
 	private String email;
 	
-	@Column(name = "USUARIO_LOGIN")
+	@Column(name = "CLIENTE_LOGIN")
 	private String login;
 	
 	private String senha;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "usuarioBanca", orphanRemoval = true )
+	@OneToMany(mappedBy = "clienteBanca", orphanRemoval = true )
 	private List<Banca> banca;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "usuarioCatalog", orphanRemoval = true )
+	@OneToMany(mappedBy = "clienteCatalog", orphanRemoval = true )
 	private List<Catalogacao> catalogacao = new ArrayList<>() ; 
 	
 	private Instant dataCriacao;
 	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	
+	private Set<Long> perfis = new HashSet<>();
 	
 	
 	
-	public Usuario() {
+	
+	public Set<Perfil> getPerfis() {
 		
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+
+
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+	}
+
+
+
+	public Cliente() {
+		addPerfil(Perfil.CLIENTE);
 	}
 	
 
 	
-	public Usuario( Long id, String login,String nome,String email,String senha) {
+	public Cliente( Long id, String login,String nome,String email,String senha) {
 		this.id = id;
 		this.login = login;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.dataCriacao = Instant.now();
+		addPerfil(Perfil.CLIENTE);
 	}
 		
-	public Usuario(Long id, String nome, String email, Instant dataCriacao) {
+	public Cliente(Long id, String nome, String email, Instant dataCriacao) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.dataCriacao = dataCriacao;
+		addPerfil(Perfil.CLIENTE);
 	
 	}
 	
-	public Usuario(Long id, String login, String nome, String email, String senha, List<Banca> banca, List<Catalogacao> catalogacao,
+	public Cliente(Long id, String login, String nome, String email, String senha, List<Banca> banca, List<Catalogacao> catalogacao,
 			Instant dataCriacao) {
 		this.id = id;
 		this.login = login;
@@ -85,6 +111,7 @@ public class Usuario implements Serializable {
 		this.banca = banca;
 		this.catalogacao = catalogacao;
 		this.dataCriacao = dataCriacao;
+		addPerfil(Perfil.CLIENTE);
 	}
 	
 	public Long getId() {
@@ -156,7 +183,7 @@ public class Usuario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		Cliente other = (Cliente) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

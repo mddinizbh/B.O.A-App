@@ -6,15 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.binaryOptionAnalytcs.entities.Usuario;
+import com.example.binaryOptionAnalytcs.entities.Cliente;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
 	@Transactional(readOnly=true)
-	Usuario findByEmail(String email);
+	Cliente findByEmail(String email);
 	@Transactional(readOnly=true)
-	Usuario findByLogin(String login);
+	Cliente findByLogin(String login);
 	
 
 }

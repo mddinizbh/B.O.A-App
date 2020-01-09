@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,7 @@ public class EstrategiaResource {
 		return ResponseEntity.ok().body(dto);
 	
 	}
+
 	@RequestMapping(value="/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<EstrategiaDTO>> findPage(@RequestParam(value="page", defaultValue ="0") Integer page,
 														@RequestParam(value="linesPerPage", defaultValue ="24") Integer linesPerPage,
@@ -56,7 +58,7 @@ public class EstrategiaResource {
 		 return ResponseEntity.ok().body(listDto);
 		
 		}
-	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody EstrategiaDTO objDto){
 		
@@ -68,6 +70,7 @@ public class EstrategiaResource {
 		return ResponseEntity.created(uri).build();
 		
 	}
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping( value="/{id}",method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody EstrategiaDTO objDto, @PathVariable Long id){
 		Estrategia obj = service.fromDTO(objDto);

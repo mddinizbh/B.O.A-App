@@ -4,30 +4,33 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.binaryOptionAnalytcs.entities.Aporte;
 import com.example.binaryOptionAnalytcs.entities.Banca;
 import com.example.binaryOptionAnalytcs.entities.Catalogacao;
+import com.example.binaryOptionAnalytcs.entities.Cliente;
 import com.example.binaryOptionAnalytcs.entities.DayTrade;
 import com.example.binaryOptionAnalytcs.entities.Estrategia;
 import com.example.binaryOptionAnalytcs.entities.EstrategiaCatalog;
 import com.example.binaryOptionAnalytcs.entities.ParMoeda;
+import com.example.binaryOptionAnalytcs.entities.Perfil;
 import com.example.binaryOptionAnalytcs.entities.Retirada;
 import com.example.binaryOptionAnalytcs.entities.Trade;
-import com.example.binaryOptionAnalytcs.entities.Usuario;
 import com.example.binaryOptionAnalytcs.repositories.AporteRepository;
 import com.example.binaryOptionAnalytcs.repositories.BancaRepository;
 import com.example.binaryOptionAnalytcs.repositories.CatalogacaoRepository;
+import com.example.binaryOptionAnalytcs.repositories.ClienteRepository;
 import com.example.binaryOptionAnalytcs.repositories.DayTradeRepository;
 import com.example.binaryOptionAnalytcs.repositories.EstrategiaCatalogRepository;
 import com.example.binaryOptionAnalytcs.repositories.EstrategiaRepository;
 import com.example.binaryOptionAnalytcs.repositories.ParMoedaRepository;
 import com.example.binaryOptionAnalytcs.repositories.RetiradaRepository;
 import com.example.binaryOptionAnalytcs.repositories.TradeRepository;
-import com.example.binaryOptionAnalytcs.repositories.UsuarioRepository;
 
 @Service
 public class DBService {
@@ -37,7 +40,7 @@ private Long random;
 	private EstrategiaRepository estRepository;
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private ClienteRepository usuarioRepository;
 
 	@Autowired
 	private AporteRepository aporteRepository;
@@ -62,24 +65,27 @@ private Long random;
 	
 	@Autowired
 	private ParMoedaRepository ParMoedaRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEnconder;
 
 	@Autowired
-	public Usuario populadorUsuario() {
-		Usuario usuario = new Usuario();
+	public Cliente populadorCliente() {
+		Cliente usuario = new Cliente();
 		usuario.setId(null);
 		usuario.setDataCriacao(Instant.now());
 		usuario.setLogin("usuario"+random);
 		usuario.setEmail("usuario"+random+"@gmail.com");
-		usuario.setSenha("senha"+random);
+		usuario.setSenha(passwordEnconder.encode("senha@123"));
 		usuario.setNome("Nome "+ random);
 				
 		return usuario;
 	}
 	
-	public Banca populadorBanca (Usuario usu) {
+	public Banca populadorBanca (Cliente usu) {
 		Banca banca = new Banca();
 		banca.setId(null);
-		banca.setUsuarioBanca(usu);
+		banca.setClienteBanca(usu);
 		banca.setDataCricao(Instant.now());
 		banca.setValorInicial(random*1000);
 		banca.setValorAtual(banca.getValorInicial());
@@ -145,17 +151,18 @@ private Long random;
 		return retirada;
 	}
 	
-	public Catalogacao populadorCatalogacao (Usuario usuario, ParMoeda par) {
+	public Catalogacao populadorCatalogacao (Cliente usuario, ParMoeda par) {
 		
-		Catalogacao catalogacao = new Catalogacao();
+		Random rd = new Random();
+		String s1 = ""+rd.nextInt(23)+":"+rd.nextInt(59);
+		String s2 = ""+rd.nextInt(23)+":"+rd.nextInt(59);
+		
+		Catalogacao catalogacao = new Catalogacao(null,"Catalogacao "+ random,LocalDate.now(),s1,s2);
 		
 		catalogacao.setId(null);
-		catalogacao.setUsuarioCatalog(usuario);
+		catalogacao.setClienteCatalog(usuario);
 		catalogacao.setParMoeda(par);
-		catalogacao.setNome("Catalogacao "+ random);
-		catalogacao.setData(LocalDate.now());
-		catalogacao.setHoraInicioCatalog(LocalDate.now());
-		catalogacao.setHorafimCatalog(LocalDate.now());
+	
 		
 		return catalogacao;
 		
@@ -213,9 +220,9 @@ private Long random;
 	
 	public void instantiateDatabase() throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("tesando app");
 		
-		List <Usuario> usus = new ArrayList<Usuario>();
+		
+		List <Cliente> usus = new ArrayList<Cliente>();
 		List <Banca> bancas = new ArrayList<Banca>();
 		List <Catalogacao> cats = new ArrayList<Catalogacao>();
 		List <EstrategiaCatalog> estsCats = new ArrayList<EstrategiaCatalog>();
@@ -226,23 +233,43 @@ private Long random;
 		List <ParMoeda> pars = new ArrayList<ParMoeda>();
 		List <Trade> trades = new ArrayList<Trade>(); 
 		
-		for (int i = 0; i<10;i++) {
-			setRandom((long) i);
-			usus.add(populadorUsuario());
+		for (int x = 0; x<3;x++) {
 			ests.add(populadorEstrategia());
+		}
+		for (int i = 0; i<3;i++) {
+			setRandom((long) i);
+			usus.add(populadorCliente());
 			
-			bancas.add(populadorBanca(usus.get(i)));
-			aportes.add(populadorAporte(bancas.get(i)));
-			retiradas.add(populadorRetirada(bancas.get(i)));
 			
-			dts.add(populadorDayTrade(bancas.get(i)));
-			for(int y = 0; y<5;y++) {
-				trades.add(populadorTrade(dts.get(i), ests.get(i),y));
-			}
+			for (int y = 0; y<3;y++) {
+				setRandom((long)y);
+				if(i==0) {
+					usus.get(i).setLogin("Marley");
+					usus.get(i).addPerfil(Perfil.ADMIN);
+					usus.get(i).setEmail("Marley.diniz@gmail.com");
+					bancas.add(populadorBanca(usus.get(i)));
+				}else {
+					bancas.add(populadorBanca(usus.get(i)));
+				}
+				if(y==i) {
+					for(int a = 0; a<2;a++) {
+						aportes.add(populadorAporte(bancas.get(y)));
+						retiradas.add(populadorRetirada(bancas.get(y)));
+						dts.add(populadorDayTrade(bancas.get(y)));
+						for(int k = 0; k<3;k++) {
+							trades.add(populadorTrade(dts.get(y), ests.get(k),k));
+						}
 					
-			pars.add(populadorParMoeda());
-			cats.add(populadorCatalogacao(usus.get(i),pars.get(i)));
-			estsCats.add(populadorEstrategiaCatalogEstrategia(cats.get(i),ests.get(i)));
+					}				
+				}
+			}
+			for(int j = 0; j<3;j++) {
+				pars.add(populadorParMoeda());
+				cats.add(populadorCatalogacao(usus.get(i),pars.get(j)));
+				for(int k = 0; k<3;k++) {
+					estsCats.add(populadorEstrategiaCatalogEstrategia(cats.get(j),ests.get(k)));
+				}
+			}
 					
 		}
 		
@@ -258,8 +285,6 @@ private Long random;
 		ParMoedaRepository.saveAll(pars);
 		catalogacaoRepository.saveAll(cats);
 		estrategiaCatalogRepository.saveAll(estsCats);
-		
-		
-		
+			
 	}
 }

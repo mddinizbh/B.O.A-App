@@ -14,9 +14,9 @@ public class BancaDTO implements Serializable{
 	private Long valorAtual;
 	private Long stopGain;
 	private Long stopLoss;
-	private Instant dataCriacao;
-	private String nome;
 	private Long idUsuario;
+	private String nome;
+	private Instant dataCriacao;
 	
 	
 	public BancaDTO() {
@@ -30,15 +30,14 @@ public class BancaDTO implements Serializable{
 		this.stopLoss = obj.getStopLoss();
 		this.nome = obj.getNome();
 		this.dataCriacao = obj.getDataCriacao();
-		this.idUsuario = obj.getUsuarioBanca().getId();
+		this.idUsuario = obj.getClienteBanca().getId();
 		
 		
 	}
-	
-	
-	
-	public BancaDTO (Long id, Long valorInicial, Long valorAtual, Long stopGain, Long stopLoss, Instant dataCriacao,
-			String nome) {
+
+		
+	public BancaDTO (Long id, Long valorInicial, Long valorAtual, Long stopGain, 
+					 Long stopLoss, Instant dataCriacao,	String nome) {
 		super();
 		this.id = id;	
 		this.valorInicial = valorInicial;
@@ -89,13 +88,13 @@ public class BancaDTO implements Serializable{
 	public void setStopLoss(Long stopLoss) {
 		this.stopLoss = stopLoss;
 	}
-
-	public Instant getDataCriacao() {
-		return dataCriacao;
+	
+	public Long getIdUsuario() {
+		return idUsuario;
 	}
-
-	public void setDataCriacao(Instant dataCriacao) {
-		this.dataCriacao = dataCriacao;
+	
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public String getNome() {
@@ -105,13 +104,14 @@ public class BancaDTO implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public Instant getDataCriacao() {
+		return dataCriacao;
 	}
 	
+	
+	public void setDataCriacao(Instant dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
 	
 
 }

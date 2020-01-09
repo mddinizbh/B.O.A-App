@@ -31,11 +31,20 @@ public class BancaResource {
 	
 	@RequestMapping(value="/findAll", method = RequestMethod.GET)
 	public ResponseEntity<List <BancaDTO>> findAll() {
-				
-	List<Banca> bancas = service.findAll();
-	List<BancaDTO> bancasDto = bancas.stream().map(obj -> new BancaDTO(obj)).collect(Collectors.toList());	
+		
+		List<Banca> bancas = service.findAll();
+		List<BancaDTO> bancasDto = bancas.stream().map(obj -> new BancaDTO(obj)).collect(Collectors.toList());	
 		return ResponseEntity.ok().body(bancasDto);
+		
+	}
 	
+	@RequestMapping(value="/findAllByCliente/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List <BancaDTO>> findAllByCliente(@PathVariable Long id) {
+				
+		List<Banca> bancas = service.findAllByCliente(id);
+		List<BancaDTO> bancasDto = bancas.stream().map(obj -> new BancaDTO(obj)).collect(Collectors.toList());	
+		return ResponseEntity.ok().body(bancasDto);
+		
 	}
 	
 	

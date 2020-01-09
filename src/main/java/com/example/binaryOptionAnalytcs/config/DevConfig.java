@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.example.binaryOptionAnalytcs.services.DBService;
+import com.example.binaryOptionAnalytcs.services.EmailService;
+import com.example.binaryOptionAnalytcs.services.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
@@ -25,5 +27,9 @@ public class DevConfig {
 		return true;
 	}
 	
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
+	}
 }
 	

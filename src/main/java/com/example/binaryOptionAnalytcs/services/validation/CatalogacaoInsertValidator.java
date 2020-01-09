@@ -3,50 +3,53 @@ package com.example.binaryOptionAnalytcs.services.validation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.example.binaryOptionAnalytcs.dto.BancaNewDTO;
+import com.example.binaryOptionAnalytcs.dto.CatalogacaoNewDTO;
 import com.example.binaryOptionAnalytcs.resources.exceptions.FieldMessage;
 
-public class CatalogacaoInsertValidator extends GenericValidator implements ConstraintValidator<BancaInsert, BancaNewDTO>  {
+public class CatalogacaoInsertValidator extends GenericValidator implements ConstraintValidator<CatalogacaoInsert, CatalogacaoNewDTO>  {
 
 
 	
-	public void validarCampos(BancaNewDTO value) {
-		if(value.getIdUsario() == null) {
-			list.add(new FieldMessage("idUsuario",messageLocale.getMessage("preenchimento.obrigatorio") ));
+	public void validarCampos(CatalogacaoNewDTO value) {
+		if(value.getIdCliente() == null) {
+			list.add(new FieldMessage("idCliente",messageLocale.getMessage("preenchimento.obrigatorio") ));
 		}
-		
-		if(value.getValorInicial() == null) {
-			list.add(new FieldMessage("valorInicial",messageLocale.getMessage("preenchimento.obrigatorio") ));
-		}else if (value.getValorInicial() <= 0) {
-			list.add(new FieldMessage("valorInicial",messageLocale.getMessage("valor.maior.zero") ));
+		if(value.getIdParMoeda() == null) {
+			list.add(new FieldMessage("idParMoeda",messageLocale.getMessage("preenchimento.obrigatorio") ));
 		}
-		
+			
 		if(value.getNome() == null) {
-			list.add(new FieldMessage("Nome",messageLocale.getMessage("preenchimento.obrigatorio") ));
+			list.add(new FieldMessage("nome",messageLocale.getMessage("preenchimento.obrigatorio") ));
+		}		
+		
+		if(value.getHoraInicio() == null) {
+			list.add(new FieldMessage("horaInicio",messageLocale.getMessage("preenchimento.obrigatorio") ));
+		}if(value.getHoraFim() == null) {
+			list.add(new FieldMessage("horaFim",messageLocale.getMessage("preenchimento.obrigatorio") ));
+		}if(value.getHoraFim()!=null && value.getHoraInicio()!=null) {
+			
+			Integer horaInicio = Integer.parseInt(value.getHoraInicio().split(":")[0]);
+			Integer minutoInicio = Integer.parseInt(value.getHoraInicio().split(":")[1]);
+			Integer horaFim = Integer.parseInt(value.getHoraFim().split(":")[0]);
+			Integer minutoFim = Integer.parseInt(value.getHoraFim().split(":")[1]);
+			
+			if(horaInicio>horaFim) {
+				list.add(new FieldMessage("horaInicio",messageLocale.getMessage("hora.inicio.maior.hora.fim") ));
+			}else if(horaInicio==horaFim) {
+				if(minutoInicio>=minutoFim) {
+					list.add(new FieldMessage("horaInicio",messageLocale.getMessage("hora.inicio.maior.hora.fim") ));
+				}
+			}
+			
 		}
-		
-		
-		if(value.getStopGain() == null) {
-			list.add(new FieldMessage("StopGain",messageLocale.getMessage("preenchimento.obrigatorio") ));
-		}else if(value.getStopGain() <= 0) {
-			list.add(new FieldMessage("StopGain",messageLocale.getMessage("valor.maior.zero") ));
-		}
-		
-		
-		if(value.getStopLoss() == null) {
-			list.add(new FieldMessage("StopLoss",messageLocale.getMessage("preenchimento.obrigatorio") ));
-		}else if(value.getStopLoss() <= 0) {
-			list.add(new FieldMessage("StopLoss",messageLocale.getMessage("valor.maior.zero") ));
-		}
-		
-	}
+}
 	
 	@Override
-	public void initialize(BancaInsert ann) {
+	public void initialize(CatalogacaoInsert ann) {
 		
 	}
 	@Override
-	public boolean isValid(BancaNewDTO value, ConstraintValidatorContext context) {
+	public boolean isValid(CatalogacaoNewDTO value, ConstraintValidatorContext context) {
 		
 			validarCampos(value);
 			populaContext(context);	

@@ -19,7 +19,7 @@ import com.example.binaryOptionAnalytcs.entities.EstrategiaCatalog;
 import com.example.binaryOptionAnalytcs.services.EstrategiaCatalogService;
 
 @RestController
-@RequestMapping(value = "/estrategiasCatalogs")
+@RequestMapping(value = "/estrategiascatalogs")
 public class EstrategiaCatalogResource {
 	
 	@Autowired

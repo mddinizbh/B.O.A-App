@@ -3,39 +3,29 @@ package com.example.binaryOptionAnalytcs.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.example.binaryOptionAnalytcs.entities.Usuario;
-import com.example.binaryOptionAnalytcs.services.validation.UsuarioInsert;
+import com.example.binaryOptionAnalytcs.entities.Cliente;
+import com.example.binaryOptionAnalytcs.services.validation.ClienteUpdate;
 
-@UsuarioInsert
-public class UsuarioNewDTO implements Serializable {
+@ClienteUpdate
+public class ClienteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	
 	private Long id;
-			
 	private String nome;
-		
 	private String email;
-	
-    private String login;
-
-    private String senha;
-
 	private Instant dataCriacao;
 	
-	public UsuarioNewDTO() {
+	public ClienteDTO() {
 		
 	}
 	
-	public UsuarioNewDTO(Usuario obj) {
+	public ClienteDTO(Cliente obj) {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.email = obj.getEmail();
-		this.login = obj.getLogin();
-		this.senha = obj.getSenha();
-		this.dataCriacao = Instant.now();
+		this.dataCriacao = obj.getDataCriacao();
 	}
 
 	public Long getId() {
@@ -69,22 +59,6 @@ public class UsuarioNewDTO implements Serializable {
 
 	public void setDataCriacao(Instant dataCriacao) {
 		this.dataCriacao = dataCriacao;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 
